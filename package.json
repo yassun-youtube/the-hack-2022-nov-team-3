@@ -11,26 +11,26 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@emotion/cache": "latest",
-    "@emotion/react": "latest",
-    "@emotion/server": "latest",
-    "@emotion/styled": "latest",
-    "@mui/icons-material": "latest",
-    "@mui/material": "latest",
-    "@next/font": "latest",
-    "next": "latest",
-    "react": "latest",
-    "react-dom": "latest"
+    "@emotion/cache": "^11.10.5",
+    "@emotion/react": "^11.10.5",
+    "@emotion/server": "^11.10.0",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.10.16",
+    "@mui/material": "^5.10.16",
+    "@next/font": "^13.0.5",
+    "next": "13.0.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/node": "latest",
-    "@types/react": "latest",
-    "eslint": "latest",
-    "eslint-config-next": "latest",
+    "@types/node": "18.11.10",
+    "@types/react": "^18.0.25",
+    "eslint": "^8.28.0",
+    "eslint-config-next": "^13.0.5",
     "husky": "^8.0.2",
     "lint-staged": "^13.0.4",
     "prettier": "^2.8.0",
-    "typescript": "latest"
+    "typescript": "^4.9.3"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
