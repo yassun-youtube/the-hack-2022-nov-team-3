@@ -6,10 +6,10 @@ import NextLink from 'next/link'
 import Typography from '@mui/material/Typography'
 
 // components
-import { ExternalLink } from '~/src/components'
+import { ExternalLink } from '~/components'
 
 // constants
-import { SITE_TITLE } from '~/src/constant'
+import { SITE_TITLE } from '~/constant'
 
 export default function Header() {
   return (

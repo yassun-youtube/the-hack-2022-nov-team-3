@@ -1,11 +1,11 @@
-import { roboto } from '~/src/theme'
+import { roboto } from '~/theme'
 
 // regisiter emotion
-import EmotionRootStyleRegistry from '~/src/EmotionRootStyleRegistry'
+import EmotionRootStyleRegistry from '~/EmotionRootStyleRegistry'
 
 // components
-import Header from '~/src/components/Header'
-import Footer from '~/src/components/Footer'
+import Header from '~/components/Header'
+import Footer from '~/components/Footer'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

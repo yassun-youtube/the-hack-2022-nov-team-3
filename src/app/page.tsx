@@ -5,15 +5,13 @@
 import * as React from 'react'
 import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
-import Typography from '@mui/material/Typography'
+
 import Box from '@mui/material/Box'
-import { useRouter } from 'next/navigation'
 
 // components
-import { NormalButton } from '~/src/components'
+import { NormalButton } from '~/components'
 
-export default function Members() {
-  const router = useRouter()
+export default function Home() {
   return (
     <>
       <CssBaseline />
@@ -27,9 +25,17 @@ export default function Members() {
             alignItems: 'center',
           }}
         >
-          <Typography variant="h3" component="h1" gutterBottom>
-            detail
-          </Typography>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
           <br />
           <br />
           <br />
@@ -38,10 +44,10 @@ export default function Members() {
           <NormalButton
             variant="contained"
             clickHandler={() => {
-              router.push('/')
+              alert('reset')
             }}
           >
-            一覧に戻る
+            検索条件をリセット
           </NormalButton>
         </Box>
       </Container>

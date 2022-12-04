@@ -1,6 +1,6 @@
 'use client'
 
-import theme from '~/src/theme'
+import theme from '~/theme'
 
 export default function Head() {
   return (

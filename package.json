@@ -1,6 +1,6 @@
 {
-  "name": "nextjs-with-typescript",
-  "version": "5.0.0",
+  "name": "the-hack-2022-nov-team-3",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "dev": "next dev",

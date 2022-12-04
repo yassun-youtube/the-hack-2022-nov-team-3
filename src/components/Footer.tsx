@@ -1,10 +1,8 @@
 /** @jsxImportSource @emotion/react */
 'use client'
 
-import React from 'react'
-
 import { css } from '@emotion/react'
-import Copyright from '~/src/components/Copyright'
+import Copyright from '~/components/Copyright'
 
 export default function Footer() {
   return (
