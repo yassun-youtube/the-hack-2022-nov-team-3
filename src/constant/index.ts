@@ -1,1 +1,1 @@
-export const SITE_TITLE = 'constant'
+export const SITE_TITLE = 'The Hack Members Profile'

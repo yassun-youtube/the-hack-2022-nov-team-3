@@ -6,3 +6,49 @@
 yarn install
 yarn dev
 ```
+
+## UI ライブラリ
+
+### Material UI
+
+https://mui.com/material-ui/getting-started/overview/
+
+## CSS in JS
+
+### emotion
+
+https://emotion.sh/docs/introduction
+
+## ディレクトリ
+
+```sh
+
+■ src/components
+
+コンポーネントを格納
+
+■ src/constant
+
+定数を格納
+
+■ src/hooks
+
+カスタムhookを格納
+
+■ src/pages/api
+
+APIを使用する場合、格納
+
+■ src/types
+
+型定義ファイルを格納
+
+■ src/utils
+
+ユーティリティー関数を格納
+
+■ app/
+
+ページのファイルはこちらに格納
+
+```
