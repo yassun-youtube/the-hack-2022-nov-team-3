@@ -8,7 +8,8 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Link from '~/src/components/Link'
 import ProTip from '~/src/components/ProTip'
-import Copyright from '~/src/components/Copyright'
+
+import Button from '@mui/material/Button'
 
 export default function Home() {
   return (
@@ -28,8 +29,8 @@ export default function Home() {
         <Link href="/about" color="secondary">
           Go to the about page
         </Link>
+        <Button variant="contained">Hello World</Button>
         <ProTip />
-        <Copyright />
       </Box>
     </Container>
   )
