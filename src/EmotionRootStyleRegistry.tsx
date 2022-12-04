@@ -10,7 +10,7 @@ import { useState } from 'react'
 // https://beta.nextjs.org/docs/styling/css-in-js
 // https://stackblitz.com/edit/vercel-next-js-ajvkxp?file=app%2Fpage.tsx,app%2Flayout.tsx,app%2FEmotionRootStyleRegistry.tsx,package.json
 
-export default function EmotionRootStyleRegistry({ children }: { children: JSX.Element }) {
+export default function EmotionRootStyleRegistry({ children }: { children: React.ReactNode }) {
   const [cache] = useState<EmotionCache>(() => {
     const cache = createCache({ key: 'mui-style' })
     cache.compat = true
