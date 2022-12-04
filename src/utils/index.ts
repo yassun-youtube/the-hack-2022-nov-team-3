@@ -1,1 +1,1 @@
-export {}
+export { removeHtml } from './removeHtml'

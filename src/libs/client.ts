@@ -10,5 +10,5 @@ import { serviceDomain } from '~/constant'
 
 export const client = createClient({
   serviceDomain,
-  apiKey: process?.env?.MICROCMS_API_KEY ?? '',
+  apiKey: process.env?.MICROCMS_API_KEY ?? '',
 })
