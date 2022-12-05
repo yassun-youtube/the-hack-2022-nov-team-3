@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography'
 import { ExternalLink } from '~/components'
 
 // constants
-import { SITE_TITLE } from '~/constant'
+import { SITE_TITLE, MICROCMS_ADMIN } from '~/constant'
 
 export default function Header() {
   return (
@@ -36,8 +36,7 @@ export default function Header() {
       >
         <NextLink href={'/'}>{SITE_TITLE}</NextLink>
       </Typography>
-      {/* MEMO: MICROCMSのURLを指定する */}
-      <ExternalLink url={'https://www.yahoo.co.jp/'} title={'ログイン'} color={'#fff'} />
+      <ExternalLink url={MICROCMS_ADMIN} title={'ログイン'} color={'#fff'} />
     </header>
   )
 }
