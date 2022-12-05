@@ -1,14 +1,7 @@
 'use client'
-import { Roboto } from '@next/font/google'
+
 import { createTheme } from '@mui/material/styles'
 import { red } from '@mui/material/colors'
-
-export const roboto = Roboto({
-  weight: ['300', '400', '500', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-  fallback: ['Helvetica', 'Arial', 'sans-serif'],
-})
 
 // 参考:
 // https://zenn.dev/anozon/articles/mui-default-typography
@@ -16,13 +9,13 @@ export const roboto = Roboto({
 // Create a theme instance.
 const theme = createTheme({
   typography: {
-    fontFamily: roboto.style.fontFamily,
+    fontFamily: '"Hiragino Mincho ProN", "Yu Mincho", "MS PMincho", serif',
     fontSize: 14,
     fontWeightLight: 300,
     fontWeightRegular: 400,
     fontWeightMedium: 700,
-    h1: { fontSize: 50 },
-    h2: { fontSize: 40 },
+    h1: { fontSize: 40 },
+    h2: { fontSize: 35 },
     h3: { fontSize: 30 },
     h4: { fontSize: 25 },
     h5: { fontSize: 20 },

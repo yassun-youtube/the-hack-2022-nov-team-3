@@ -27,7 +27,7 @@ export default function Header() {
         component="h1"
         css={css`
           color: #fff;
-          font-size: 22px;
+          font-size: 30px;
           & a {
             color: #fff;
             text-decoration: none;

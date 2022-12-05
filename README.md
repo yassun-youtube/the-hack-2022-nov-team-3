@@ -3,9 +3,27 @@
 ## How to use
 
 ```sh
+
+## インストール
 yarn install
+
+## ローカル開発
 yarn dev
+
+## storybookを開く
+yarn storybook
 ```
+
+## コンポーネントの作り方
+
+デザインが無いので、MUI で必要なパーツを見つけるか、自作してください。デザインは各自調整してください。　　
+コンポーネントは storybook で管理しようと思います。
+
+https://storybook.js.org/
+
+### MUI のカスタム Theme を Storybook で確認できるようにする
+
+https://zenn.dev/enish/articles/ff678649ecb6d9
 
 ## git 運用
 
@@ -28,6 +46,11 @@ https://mui.com/material-ui/getting-started/overview/
 ### emotion
 
 https://emotion.sh/docs/introduction
+
+## ESLint + Prettier
+
+build 時に lint が、commit 時に、prettier が走ります。  
+エディタに上記のプラグインを入れると便利です。
 
 ## ディレクトリ
 
@@ -67,6 +90,13 @@ APIを使用する場合、格納
 
 ```
 
-## MUI のカスタム Theme を Storybook で確認できるようにする
+## .env.local
 
-https://zenn.dev/enish/articles/ff678649ecb6d9
+ローカルに「.env.local」ファイルを作成して,以下を記入してください。　　
+key は別ファイルで管理しています。
+
+```
+MICROCMS_SERVICE_DOMAIN=aaaaaaaaa
+MICROCMS_API_KEY=XXXXXXXXXXXXXXXXXXXXXXXX
+
+```

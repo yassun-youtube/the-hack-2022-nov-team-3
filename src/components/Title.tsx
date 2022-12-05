@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography'
 import { css } from '@emotion/react'
 import { ThemeProvider } from '@mui/material'
 
+// theme
 import theme from '~/theme'
 
 type Props = {
