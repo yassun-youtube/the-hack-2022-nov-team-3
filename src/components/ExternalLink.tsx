@@ -1,3 +1,6 @@
+/** @jsxImportSource @emotion/react */
+'use client'
+
 import { FC } from 'react'
 import LaunchIcon from '@mui/icons-material/Launch'
 import { Link as MuiLink } from '@mui/material'

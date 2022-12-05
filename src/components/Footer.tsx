@@ -2,7 +2,9 @@
 'use client'
 
 import { css } from '@emotion/react'
-import Copyright from '~/components/Copyright'
+
+// constant
+import { COPYRIGHT } from '~/constant'
 
 export default function Footer() {
   return (
@@ -11,9 +13,10 @@ export default function Footer() {
         background: #000;
         color: #fff;
         padding: 20px 20px;
+        text-align: center;
       `}
     >
-      <Copyright text={'hogehoge'} link={'#'} />
+      <small>{COPYRIGHT}</small>
     </footer>
   )
 }

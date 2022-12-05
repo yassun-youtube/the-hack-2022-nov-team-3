@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation'
 
 // components
 import { NormalButton } from '~/components'
+import Title from '~/components/Title'
 
 export default function Members() {
   const router = useRouter()
@@ -27,13 +28,7 @@ export default function Members() {
             alignItems: 'center',
           }}
         >
-          <Typography variant="h3" component="h1" gutterBottom>
-            detail
-          </Typography>
-          <br />
-          <br />
-          <br />
-          <br />
+          <Title text={'hogehoge'} />
 
           <NormalButton
             variant="contained"

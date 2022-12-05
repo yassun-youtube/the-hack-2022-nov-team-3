@@ -4,8 +4,7 @@ import { roboto } from '~/theme'
 import EmotionRootStyleRegistry from '~/EmotionRootStyleRegistry'
 
 // components
-import Header from '~/components/Header'
-import Footer from '~/components/Footer'
+import { Header, Footer } from '~/components'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

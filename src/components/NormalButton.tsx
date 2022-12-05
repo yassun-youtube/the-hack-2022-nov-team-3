@@ -1,3 +1,6 @@
+/** @jsxImportSource @emotion/react */
+'use client'
+
 import Button from '@mui/material/Button'
 
 // components
