@@ -1,14 +1,11 @@
 /** @jsxImportSource @emotion/react */
-
 'use client'
 
-import * as React from 'react'
 import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
-import Box from '@mui/material/Box'
 
 // components
-import { NormalButton, Title } from '~/components'
+import { NormalButton, Title, Section } from '~/components'
 
 export default function Home() {
   return (
@@ -16,15 +13,7 @@ export default function Home() {
       <CssBaseline />
       <Container maxWidth="lg">
         {/* 絞り込み */}
-        <Box
-          sx={{
-            my: 5,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
+        <Section>
           <Title text={'メンバーの絞り込み'} />
           <NormalButton
             variant="contained"
@@ -34,31 +23,15 @@ export default function Home() {
           >
             検索条件をリセット
           </NormalButton>
-        </Box>
+        </Section>
         {/* 運営者 */}
-        <Box
-          sx={{
-            my: 5,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
+        <Section>
           <Title text={'運営者'} />
-        </Box>
+        </Section>
         {/* サロンメンバー */}
-        <Box
-          sx={{
-            my: 5,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
+        <Section>
           <Title text={'サロンメンバー'} />
-        </Box>
+        </Section>
       </Container>
     </>
   )

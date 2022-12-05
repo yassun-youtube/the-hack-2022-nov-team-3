@@ -13,6 +13,10 @@ yarn dev
 
 https://atmarkit.itmedia.co.jp/ait/articles/1708/01/news015.html
 
+## Node.js version
+
+.node-version で管理（各自バージョン管理ツールを使用してください）
+
 ## UI ライブラリ
 
 ### Material UI
