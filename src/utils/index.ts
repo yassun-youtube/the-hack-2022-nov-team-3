@@ -1,0 +1,1 @@
+export { removeHtml } from './removeHtml'
