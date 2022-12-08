@@ -1,5 +1,3 @@
-import { roboto } from '~/theme'
-
 // regisiter emotion
 import EmotionRootStyleRegistry from '~/EmotionRootStyleRegistry'
 
@@ -8,7 +6,7 @@ import { Header, Footer } from '~/components'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html className={roboto.className}>
+    <html>
       <head />
       <body>
         <Header />
