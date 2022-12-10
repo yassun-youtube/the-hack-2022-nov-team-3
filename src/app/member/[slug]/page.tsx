@@ -9,10 +9,16 @@ import Box from '@mui/material/Box'
 import { useRouter } from 'next/navigation'
 
 // components
-import { NormalButton } from '~/components'
+import { NormalButton, Hero } from '~/components'
 import Title from '~/components/Title'
 
-export default function Members() {
+export default function Members({
+  params,
+  searchParams,
+}: {
+  params: { slug: string }
+  searchParams: { id: string }
+}) {
   const router = useRouter()
   return (
     <>
@@ -27,8 +33,12 @@ export default function Members() {
             alignItems: 'center',
           }}
         >
-          <Title text={'hogehoge'} />
-
+          <Title text={searchParams.id} />
+          <Hero
+            userName={params.slug}
+            mainHeroImage={'https://picsum.photos/900/600'}
+            profileThumbnailImage={'https://loremflickr.com/g/320/240/man'}
+          />
           <NormalButton
             variant="contained"
             clickHandler={() => {
