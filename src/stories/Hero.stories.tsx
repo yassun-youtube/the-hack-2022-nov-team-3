@@ -7,7 +7,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react'
 import Hero from '../components/Hero'
 
 export default {
-  title: 'PARTS/Title',
+  title: 'PARTS/Hero',
   component: Hero,
   decorators: [
     (Story) => {
