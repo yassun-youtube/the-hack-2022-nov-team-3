@@ -14,6 +14,10 @@ yarn dev
 yarn storybook
 ```
 
+## 構成
+
+https://www.figma.com/file/ILUrRsGuz5uDnbsnKaOPVH/profile_blog
+
 ## コンポーネントの作り方
 
 デザインが無いので、MUI で必要なパーツを見つけるか、自作してください。デザインは各自調整してください。　　
