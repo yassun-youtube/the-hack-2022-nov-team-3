@@ -38,6 +38,8 @@ export default function Members({
             userName={params.slug}
             mainHeroImage={'https://picsum.photos/900/600'}
             profileThumbnailImage={'https://loremflickr.com/g/320/240/man'}
+            releaseDate={'2022/12/11'}
+            lastUpdatedDate={'2022/12/11'}
           />
           <NormalButton
             variant="contained"

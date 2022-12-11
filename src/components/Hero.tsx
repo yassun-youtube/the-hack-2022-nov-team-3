@@ -8,9 +8,17 @@ type Props = {
   userName: string
   mainHeroImage: string
   profileThumbnailImage: string
+  releaseDate: string
+  lastUpdatedDate: string
 }
 
-const Hero: FC<Props> = ({ userName, mainHeroImage, profileThumbnailImage }: Props) => {
+const Hero: FC<Props> = ({
+  userName,
+  mainHeroImage,
+  profileThumbnailImage,
+  releaseDate,
+  lastUpdatedDate,
+}: Props) => {
   return (
     <div
       css={css`
@@ -36,12 +44,21 @@ const Hero: FC<Props> = ({ userName, mainHeroImage, profileThumbnailImage }: Pro
           left: 20px;
           border: solid 3px #fff;
         }
-        .updateTime
+        .datesAndTimes {
+          display: flex;
+          justify-content: flex-end;
+        }
       `}
     >
       <div className="relative">
         <img src={mainHeroImage} className="hero_picture" alt="" />
         <img src={profileThumbnailImage} className="absolute" alt="" />
+      </div>
+      <div className="datesAndTimes">
+        <Typography>公開日：{releaseDate}</Typography>
+      </div>
+      <div className="datesAndTimes">
+        <Typography>最終更新日：{lastUpdatedDate}</Typography>
       </div>
     </div>
   )

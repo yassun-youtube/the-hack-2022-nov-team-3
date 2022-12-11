@@ -29,4 +29,6 @@ HeroImage.args = {
   userName: 'ユーザ名',
   mainHeroImage: 'https://picsum.photos/900/600',
   profileThumbnailImage: 'https://loremflickr.com/g/320/240/man',
+  releaseDate: '2022/12/11',
+  lastUpdatedDate: '2022/12/11',
 }
