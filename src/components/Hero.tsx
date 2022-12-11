@@ -2,11 +2,7 @@
 'use client'
 import { FC } from 'react'
 import { css } from '@emotion/react'
-import { Typography, Avatar } from '@mui/material/'
-import { deepOrange, deepPurple } from '@mui/material/colors'
-
-// constant
-import { COPYRIGHT } from '~/constant'
+import Typography from '@mui/material/Typography'
 
 type Props = {
   userName: string
@@ -34,18 +30,17 @@ const Hero: FC<Props> = ({ userName, mainHeroImage, profileThumbnailImage }: Pro
         .absolute {
           position: absolute;
           width: 150px;
-          height: 100px;
+          height: 150px;
+          object-fit: cover; /* この一行を追加するだけ！ */
           bottom: -50px;
           left: 20px;
           border: solid 3px #fff;
         }
+        .updateTime
       `}
     >
       <div className="relative">
         <img src={mainHeroImage} className="hero_picture" alt="" />
-        <Avatar className="hero_icon" sx={{ bgcolor: '' }}>
-          {userName[0].toUpperCase()}
-        </Avatar>
         <img src={profileThumbnailImage} className="absolute" alt="" />
       </div>
     </div>
