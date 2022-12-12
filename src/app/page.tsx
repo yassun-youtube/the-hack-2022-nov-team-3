@@ -1,13 +1,25 @@
 /** @jsxImportSource @emotion/react */
 'use client'
-
+import { useEffect } from 'react'
 import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
+
+import { client } from '~/libs'
 
 // components
 import { NormalButton, Title, Section } from '~/components'
 
 export default function Home() {
+  useEffect(() => {
+    client
+      .getContents({
+        appUid: 'members',
+        modelUid: 'member',
+      })
+      .then((content) => console.log(content))
+      .catch((err) => console.log(err))
+  }, [])
+
   return (
     <>
       <CssBaseline />
