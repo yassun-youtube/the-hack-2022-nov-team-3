@@ -6,7 +6,7 @@
 import { createClient } from 'newt-client-js'
 
 export const client = createClient({
-  spaceUid: process.env?.NEWT_SERVICE_DOMAIN ?? '',
-  token: process.env?.NEWT_SERVICE_TOKEN ?? '',
+  spaceUid: process?.env?.NEXT_PUBLIC_NEWT_SERVICE_DOMAIN ?? '',
+  token: process?.env?.NEXT_PUBLIC_NEWT_TOKEN ?? '',
   apiType: 'cdn', // You can specify "cdn" or "api".
 })
