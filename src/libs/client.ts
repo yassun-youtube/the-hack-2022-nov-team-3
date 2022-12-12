@@ -1,13 +1,12 @@
 ////////////////////////////////////
-// microCMS JavaScript SDK
-// url: https://github.com/microcmsio/microcms-js-sdk
+// newt JavaScript SDK
+// url: https://github.com/Newt-Inc/newt-client-js
 ////////////////////////////////////
 
-import { createClient } from 'microcms-js-sdk'
-
-// constant
+import { createClient } from 'newt-client-js'
 
 export const client = createClient({
-  serviceDomain: process.env?.MICROCMS_SERVICE_DOMAIN ?? '',
-  apiKey: process.env?.MICROCMS_API_KEY ?? '',
+  spaceUid: process.env?.NEWT_SERVICE_DOMAIN ?? '',
+  token: process.env?.NEWT_SERVICE_TOKEN ?? '',
+  apiType: 'cdn', // You can specify "cdn" or "api".
 })
