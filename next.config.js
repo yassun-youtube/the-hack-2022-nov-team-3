@@ -3,11 +3,6 @@ module.exports = {
   reactStrictMode: true,
   experimental: { appDir: true },
   images: {
-    domains: [
-      'images.microcms-assets.io',
-      'res.cloudinary.com',
-      'loremflickr.com',
-      'picsum.photos',
-    ],
+    domains: ['res.cloudinary.com', 'loremflickr.com', 'picsum.photos', 'storage.googleapis.com'],
   },
 }
