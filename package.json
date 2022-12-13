@@ -20,6 +20,8 @@
     "@mui/icons-material": "^5.10.16",
     "@mui/material": "^5.10.16",
     "@next/font": "^13.0.5",
+    "@tanstack/react-query": "^4.19.1",
+    "@tanstack/react-query-devtools": "^4.19.1",
     "microcms-js-sdk": "^2.3.2",
     "newt-client-js": "^3.2.2",
     "next": "13.0.5",
