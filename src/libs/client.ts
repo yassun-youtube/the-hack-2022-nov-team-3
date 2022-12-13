@@ -1,12 +1,12 @@
 ////////////////////////////////////
-// newt JavaScript SDK
-// url: https://github.com/Newt-Inc/newt-client-js
+// ブラウザでAPI取得用のクライアント
 ////////////////////////////////////
 
-import { createClient } from 'newt-client-js'
+import axios from 'axios'
 
-export const client = createClient({
-  spaceUid: process?.env?.NEXT_PUBLIC_NEWT_SERVICE_DOMAIN ?? '',
-  token: process?.env?.NEXT_PUBLIC_NEWT_CDN_API_TOKEN ?? '',
-  apiType: 'cdn', // You can specify "cdn" or "api".
+export const client = axios.create({
+  timeout: 1000,
+  headers: {
+    Authorization: `Bearer ${process?.env?.NEXT_PUBLIC_NEWT_CDN_API_TOKEN}`,
+  },
 })
