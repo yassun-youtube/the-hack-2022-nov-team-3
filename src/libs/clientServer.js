@@ -6,9 +6,13 @@
 const axios = require('axios')
 const fs = require('fs')
 const path = require('path')
-require('dotenv').config({ path: path.join(__dirname, `../../.env.local`) })
 
-const filePath = (filename) => path.join(__dirname, `../../public/json/${filename}.json`)
+const rootDir = path.join(__dirname, `../../`)
+const jsonDir = rootDir + '/public/json'
+
+require('dotenv').config({ path: rootDir + `.env.local` })
+
+const filePath = (filename) => jsonDir + `/${filename}.json`
 
 const instance = axios.create({
   baseURL: `https://${process?.env?.NEXT_PUBLIC_NEWT_SERVICE_DOMAIN}.cdn.newt.so/v1`,
@@ -17,6 +21,11 @@ const instance = axios.create({
     Authorization: `Bearer ${process?.env?.NEXT_PUBLIC_NEWT_CDN_API_TOKEN}`,
   },
 })
+
+// jsonディレクトリがなければ作る
+if (!fs.existsSync(jsonDir)) {
+  fs.mkdirSync(jsonDir)
+}
 
 // jsonを生成
 ;(async () => {
