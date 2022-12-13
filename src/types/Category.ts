@@ -1,7 +1,7 @@
 // カテゴリーのレスポンス
 // https://developers.newt.so/apis/cdn
 
-import { Raw } from './CommonCdnApi'
+import { Raw } from './CommonCdnApiResponse'
 
 export type Category = {
   _id: string

@@ -1,7 +1,7 @@
 // Member情報
 // https://developers.newt.so/apis/cdn
 
-import { Raw, Image } from './CommonCdnApi'
+import { Raw, Image } from './CommonCdnApiResponse'
 
 export type Member = {
   _id: string
