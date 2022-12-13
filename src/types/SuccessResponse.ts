@@ -5,5 +5,5 @@ export type SuccessResponse<T> = {
   skip: number
   limit: number
   total: number
-  items: T[]
+  items: T
 }
