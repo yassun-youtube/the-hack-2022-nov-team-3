@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "predev": "node ./src/libs/clientServer.js",
     "dev": "next dev",
     "build": "next build",
+    "prebuild": "node ./src/libs/clientServer.js",
     "start": "next start",
     "lint": "next lint",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
