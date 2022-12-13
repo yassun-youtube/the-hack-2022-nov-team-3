@@ -16,6 +16,8 @@ yarn storybook
 
 ## 構成
 
+### サロンメンバーのプロフィールサイト
+
 https://www.figma.com/file/ILUrRsGuz5uDnbsnKaOPVH/profile_blog
 
 ## コンポーネントの作り方
@@ -24,10 +26,6 @@ https://www.figma.com/file/ILUrRsGuz5uDnbsnKaOPVH/profile_blog
 コンポーネントは storybook で管理しようと思います。
 
 https://storybook.js.org/
-
-### MUI のカスタム Theme を Storybook で確認できるようにする
-
-https://zenn.dev/enish/articles/ff678649ecb6d9
 
 ## git 運用
 
@@ -94,13 +92,20 @@ APIを使用する場合、格納
 
 ```
 
+## 使用する headlessCMS
+
+### Newt
+
+https://www.newt.so/
+
 ## .env.local
 
 ローカルに「.env.local」ファイルを作成して,以下を記入してください。　　
 key は別ファイルで管理しています。
 
 ```
-MICROCMS_SERVICE_DOMAIN=aaaaaaaaa
-MICROCMS_API_KEY=XXXXXXXXXXXXXXXXXXXXXXXX
+NEXT_PUBLIC_NEWT_SERVICE_DOMAIN=XXXXXXXXXXXXXXXXXXXXXXXX
+NEXT_PUBLIC_NEWT_CDN_API_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXX
+NEXT_PUBLIC_NEWT_API_TOKEN=XXXXXXXXXXXXXXXXXXXXXXXX
 
 ```
