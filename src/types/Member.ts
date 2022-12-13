@@ -1,6 +1,8 @@
 // Member情報
 // https://developers.newt.so/apis/cdn
 
+import { Raw, Image } from './CommonCdnApi'
+
 export type Member = {
   _id: string
   _sys: {
@@ -27,13 +29,6 @@ export type Member = {
   }[]
 }
 
-export type Raw = {
-  createdAt: string
-  updatedAt: string
-  firstPublishedAt: string
-  publishedAt: string
-}
-
 export type CategoryList = {
   _id: string
   _sys: {
@@ -44,14 +39,4 @@ export type CategoryList = {
   }
   label: string
   slug: string
-}
-
-export type Image = {
-  _id: string
-  src: string
-  fileType: 'image/png'
-  fileSize: number
-  fileName: 'image.png'
-  width: number
-  height: number
 }
