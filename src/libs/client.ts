@@ -1,13 +1,12 @@
 ////////////////////////////////////
-// microCMS JavaScript SDK
-// url: https://github.com/microcmsio/microcms-js-sdk
+// ブラウザでAPI取得用のクライアント
 ////////////////////////////////////
 
-import { createClient } from 'microcms-js-sdk'
+import axios from 'axios'
 
-// constant
-
-export const client = createClient({
-  serviceDomain: process.env?.MICROCMS_SERVICE_DOMAIN ?? '',
-  apiKey: process.env?.MICROCMS_API_KEY ?? '',
+export const client = axios.create({
+  timeout: 1000,
+  headers: {
+    Authorization: `Bearer ${process?.env?.NEXT_PUBLIC_NEWT_CDN_API_TOKEN}`,
+  },
 })

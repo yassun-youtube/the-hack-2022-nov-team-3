@@ -1,19 +1,48 @@
 /** @jsxImportSource @emotion/react */
 'use client'
 
-import * as React from 'react'
+// 参考
+// https://zenn.dev/nishiurahiroki/articles/7e61590892499b
+
+import { use, cache } from 'react'
 import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
-import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import { useRouter } from 'next/navigation'
 
 // components
-import { NormalButton } from '~/components'
+import { NormalButton, Hero } from '~/components'
 import Title from '~/components/Title'
 
-export default function Members() {
+// libs
+import { clientSDK } from '~/libs'
+
+// types
+import { Member } from '~/types'
+
+const getData = cache(async (slug: string) => {
+  try {
+    const res = await clientSDK.getFirstContent<Member>({
+      appUid: 'members',
+      modelUid: 'member',
+      query: {
+        slug,
+      },
+    })
+    return res
+  } catch (e) {
+    return null
+  }
+})
+
+export default function Page({ params }: { params: { slug: string } }) {
+  const data = use(getData(params.slug))
   const router = useRouter()
+  if (!data) {
+    // MEMO:404に飛ばしたい
+    return <div>not found</div>
+  }
+
   return (
     <>
       <CssBaseline />
@@ -27,14 +56,15 @@ export default function Members() {
             alignItems: 'center',
           }}
         >
-          <Title text={'hogehoge'} />
-
-          <NormalButton
-            variant="contained"
-            clickHandler={() => {
-              router.push('/')
-            }}
-          >
+          <Title text={data.name} />
+          <Hero
+            userName={data.name}
+            mainHeroImage={data?.mainImage?.src}
+            profileThumbnailImage={data?.thumbnail?.src}
+            releaseDate={data._sys.createdAt}
+            lastUpdatedDate={data._sys?.updatedAt}
+          />
+          <NormalButton variant="contained" clickHandler={() => router.push('/')}>
             一覧に戻る
           </NormalButton>
         </Box>

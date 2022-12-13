@@ -1,18 +1,20 @@
-import { roboto } from '~/theme'
-
 // regisiter emotion
 import EmotionRootStyleRegistry from '~/EmotionRootStyleRegistry'
+// react-query
+import ReactQueryWrapper from '~/ReactQueryWrapper'
 
 // components
 import { Header, Footer } from '~/components'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html className={roboto.className}>
+    <html>
       <head />
       <body>
         <Header />
-        <EmotionRootStyleRegistry>{children}</EmotionRootStyleRegistry>
+        <ReactQueryWrapper>
+          <EmotionRootStyleRegistry>{children}</EmotionRootStyleRegistry>
+        </ReactQueryWrapper>
         <Footer />
       </body>
     </html>
