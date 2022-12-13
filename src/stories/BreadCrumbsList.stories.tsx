@@ -26,5 +26,18 @@ const Template: ComponentStory<typeof BreadCrumbsList> = (args) => <BreadCrumbsL
 
 export const BreadCrumbs = Template.bind({})
 BreadCrumbs.args = {
-  userName: 'ユーザ名',
+  labelLinkList: [
+    {
+      label: 'TOP',
+      link: '/',
+    },
+    {
+      label: 'hoge',
+      link: '/hoge/',
+    },
+    {
+      label: 'huga',
+      link: null,
+    },
+  ],
 }
