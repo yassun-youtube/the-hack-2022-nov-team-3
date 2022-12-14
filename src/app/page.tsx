@@ -87,8 +87,11 @@ export default function Page() {
                       key={v}
                       css={css`
                         display: block;
-                        width: calc(20% - 20px);
                         order: 1;
+                        width: calc(18%);
+                        @media screen and (max-width: 700px) {
+                          width: calc(31%);
+                        }
                       `}
                     ></div>
                   )

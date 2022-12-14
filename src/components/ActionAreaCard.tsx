@@ -24,7 +24,12 @@ const ActionAreaCard: React.FC<Props> = ({ thumbnail, name, slug, profile, role 
   return (
     <Card
       css={css`
-        width: calc(20% - 20px);
+        width: calc(18%);
+        margin-bottom: 25px;
+        @media screen and (max-width: 700px) {
+          width: calc(31%);
+          margin-bottom: 20px;
+        }
       `}
     >
       <Link
