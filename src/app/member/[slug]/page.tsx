@@ -8,7 +8,7 @@ import { use, cache } from 'react'
 import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
-import { useRouter } from 'next/navigation'
+import { useRouter, notFound } from 'next/navigation'
 
 // components
 import { NormalButton, Hero } from '~/components'
@@ -39,8 +39,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   const data = use(getData(params.slug))
   const router = useRouter()
   if (!data) {
-    // MEMO:404に飛ばしたい
-    return <div>not found</div>
+    notFound()
   }
 
   return (
@@ -49,7 +48,7 @@ export default function Page({ params }: { params: { slug: string } }) {
       <Container maxWidth="lg">
         <Box
           sx={{
-            my: 4,
+            my: 5,
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
