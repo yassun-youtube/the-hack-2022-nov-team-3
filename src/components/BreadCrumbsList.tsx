@@ -18,11 +18,13 @@ const BreadcrumbsList: FC<Props> = ({ labelLinkList }: Props) => {
       <Breadcrumbs aria-label="breadcrumb" separator={<NavigateNextIcon fontSize="small" />}>
         {labelLinkList.map((labelLink) =>
           labelLink.link ? (
-            <Link underline="hover" color="inherit" href={labelLink.link}>
+            <Link underline="hover" color="inherit" href={labelLink.link} key={labelLink.link}>
               {labelLink.label}
             </Link>
           ) : (
-            <Typography color="text.primary">{labelLink.label}</Typography>
+            <Typography color="text.primary" key={labelLink.link}>
+              {labelLink.label}
+            </Typography>
           ),
         )}
       </Breadcrumbs>

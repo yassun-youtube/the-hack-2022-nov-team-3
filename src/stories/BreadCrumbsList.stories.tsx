@@ -32,11 +32,11 @@ BreadCrumbs.args = {
       link: '/',
     },
     {
-      label: 'hoge',
+      label: 'やっすん',
       link: '/hoge/',
     },
     {
-      label: 'huga',
+      label: 'どっすん',
       link: null,
     },
   ],
