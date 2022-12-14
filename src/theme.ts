@@ -9,7 +9,8 @@ import { red } from '@mui/material/colors'
 // Create a theme instance.
 const theme = createTheme({
   typography: {
-    fontFamily: '"Hiragino Mincho ProN", "Yu Mincho", "MS PMincho", serif',
+    fontFamily:
+      '"Helvetica Neue", "Helvetica", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Arial", "Yu Gothic", "Meiryo", sans-serif',
     fontSize: 14,
     fontWeightLight: 300,
     fontWeightRegular: 400,
