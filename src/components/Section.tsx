@@ -14,8 +14,6 @@ const Section: React.FC<Props> = ({ children }) => {
         my: 5,
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
       }}
     >
       {children}

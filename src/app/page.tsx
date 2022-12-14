@@ -3,9 +3,10 @@
 import { useState } from 'react'
 import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
+import { css } from '@emotion/react'
 
 // components
-import { NormalButton, Title, Section } from '~/components'
+import { NormalButton, Title, Section, ActionAreaCard } from '~/components'
 
 // hooks
 import { useFetchMembers, useFetchCategories } from '~/hooks'
@@ -68,15 +69,23 @@ export default function Page() {
           <div>
             <Section>
               <Title text={'メンバー'} />
-              <div>
-                <ul>
-                  {membersData?.items &&
-                    membersData?.items.map((v) => (
-                      <li key={v.slug}>
-                        <a href={`/member/${v.slug}`}>{v.name}</a>
-                      </li>
-                    ))}
-                </ul>
+              <div
+                css={css`
+                  display: flex;
+                  flex-wrap: wrap;
+                  width: 100%;
+                `}
+              >
+                {membersData?.items &&
+                  membersData?.items.map((v) => (
+                    <article key={v.slug}>
+                      <ActionAreaCard
+                        name={v.name}
+                        text={'ああああああああ'}
+                        src={v.thumbnail.src}
+                      />
+                    </article>
+                  ))}
               </div>
             </Section>
           </div>
