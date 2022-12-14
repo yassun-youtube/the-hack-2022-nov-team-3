@@ -73,20 +73,26 @@ export default function Page() {
                 css={css`
                   display: flex;
                   flex-wrap: wrap;
+                  justify-content: space-between;
                   width: 100%;
                 `}
               >
                 {membersData?.items &&
-                  membersData?.items.map((v) => (
-                    <article key={v.slug} css>
-                      <ActionAreaCard
-                        name={v.name}
-                        slug={v.slug}
-                        text={'ああああああああ'}
-                        src={v.thumbnail.src}
-                      />
-                    </article>
+                  membersData?.items.map((member) => (
+                    <ActionAreaCard key={member.slug} {...member} />
                   ))}
+                {[0, 1, 2].map((v) => {
+                  return (
+                    <div
+                      key={v}
+                      css={css`
+                        display: block;
+                        width: calc(20% - 20px);
+                        order: 1;
+                      `}
+                    ></div>
+                  )
+                })}
               </div>
             </Section>
           </div>

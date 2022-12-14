@@ -2,39 +2,58 @@
 'use client'
 
 import * as React from 'react'
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import { CardActionArea } from '@mui/material'
+import { css } from '@emotion/react'
 
 type Props = {
-  src: string
+  thumbnail: { src: string }
   name: string
   slug: string
-  text: string
+  profile: string
+  role: '0' | '1'
 }
 
-const ActionAreaCard: React.FC<Props> = ({ src, name, slug, text }) => {
-  const router = useRouter()
+const PROFILE_LIMIT = 40
+
+const ActionAreaCard: React.FC<Props> = ({ thumbnail, name, slug, profile, role }) => {
   return (
     <Card
-      onClick={() => {
-        router.push(`/member/${slug}`)
-      }}
+      css={css`
+        width: calc(20% - 20px);
+      `}
     >
-      <CardActionArea>
-        <CardMedia component="img" height="160" image={src} alt="green iguana" />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {text}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
+      <Link
+        href={`/member/${slug}`}
+        css={css`
+          text-decoration: none;
+          color: #444;
+        `}
+      >
+        <CardActionArea>
+          <CardMedia component="img" image={thumbnail?.src} alt={name} />
+          <CardContent>
+            <Typography
+              gutterBottom
+              variant="subtitle1"
+              component="div"
+              css={css`
+                font-weight: 800;
+              `}
+            >
+              {role === '0' ? '★' : ''}
+              {name}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {profile.length > PROFILE_LIMIT ? profile.slice(0, PROFILE_LIMIT) + '...' : profile}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+      </Link>
     </Card>
   )
 }

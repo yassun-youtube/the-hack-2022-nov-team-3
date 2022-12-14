@@ -26,7 +26,11 @@ const Template: ComponentStory<typeof ActionAreaCard> = (args) => <ActionAreaCar
 
 export const card1 = Template.bind({})
 card1.args = {
-  src: 'https://loremflickr.com/g/320/320/man',
+  thumbnail: {
+    src: 'https://loremflickr.com/g/320/320/man',
+  },
   name: 'やっすん the やっすん',
-  text: 'こんにちは、やっすんと申します。こんにちは、やっすんと申します。',
+  slug: 'yassun',
+  profile: 'こんにちは、やっすんと申します。こんにちは、やっすんと申します。',
+  role: '1',
 }
