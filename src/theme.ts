@@ -35,6 +35,13 @@ const theme = createTheme({
       main: red.A400,
     },
   },
+  components: {
+    MuiPaginationItem: {
+      styleOverrides: {
+        root: { '&.Mui-selected': { fontWeight: 'bold !important' } },
+      },
+    },
+  },
 })
 
 export default theme
