@@ -78,9 +78,10 @@ export default function Page() {
               >
                 {membersData?.items &&
                   membersData?.items.map((v) => (
-                    <article key={v.slug}>
+                    <article key={v.slug} css>
                       <ActionAreaCard
                         name={v.name}
+                        slug={v.slug}
                         text={'ああああああああ'}
                         src={v.thumbnail.src}
                       />
