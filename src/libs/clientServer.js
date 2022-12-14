@@ -31,7 +31,9 @@ if (!fs.existsSync(jsonDir)) {
 ;(async () => {
   const results = {}
 
-  results['member'] = await instance.get('/members/member').then((v) => v.data)
+  results['member'] = await instance
+    .get('/members/member?select=name,slug,profile,role,thumbnail.src,skill,hobby,prefectures')
+    .then((v) => v.data)
   results['hobby'] = await instance.get('/members/hobby').then((v) => v.data)
   results['skill'] = await instance.get('/members/skill').then((v) => v.data)
   results['prefectures'] = await instance.get('/members/prefectures').then((v) => v.data)
