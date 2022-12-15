@@ -12,7 +12,7 @@ export type Member = {
   }
   name: string
   slug: string
-  role: string
+  role: '0' | '1'
   thumbnail: Image
   mainImage: Image | null
   skill: CategoryList[]
