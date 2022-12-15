@@ -3,6 +3,7 @@
 
 import { Raw } from './CommonCdnApiResponse'
 
+// 元のAPIのデータ型
 export type Category = {
   _id: string
   _sys: {
@@ -11,6 +12,12 @@ export type Category = {
     createdAt: string
     updatedAt: string
   }
+  label: string
+  slug: string
+}
+
+// APIから生成したJsonのデータ型
+export type CategoryJson = {
   label: string
   slug: string
 }

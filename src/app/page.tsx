@@ -48,15 +48,11 @@ export default function Page() {
         <Section>
           <Title text={'メンバーの絞り込み'} />
           <div style={{ display: 'flex' }}>
+            <ul>{skillData?.length && skillData.map((v) => <li key={v.slug}>{v.label}</li>)}</ul>
+            <ul>{hobbyData?.length && hobbyData.map((v) => <li key={v.slug}>{v.label}</li>)}</ul>
             <ul>
-              {skillData?.items && skillData?.items.map((v) => <li key={v.slug}>{v.label}</li>)}
-            </ul>
-            <ul>
-              {hobbyData?.items && hobbyData?.items.map((v) => <li key={v.slug}>{v.label}</li>)}
-            </ul>
-            <ul>
-              {prefecturesData?.items &&
-                prefecturesData?.items.map((v) => <li key={v.slug}>{v.label}</li>)}
+              {prefecturesData?.length &&
+                prefecturesData.map((v) => <li key={v.slug}>{v.label}</li>)}
             </ul>
           </div>
           <NormalButton variant="contained" clickHandler={() => alert('reset')}>
@@ -65,7 +61,7 @@ export default function Page() {
         </Section>
         {membersIsLoading && <>...isLoading</>}
         {membersIsError && <>エラーです</>}
-        {membersData?.items && membersData.items.length > 0 && (
+        {membersData?.length && (
           <div>
             <Section>
               <Title text={'メンバー'} />
@@ -77,10 +73,9 @@ export default function Page() {
                   width: 100%;
                 `}
               >
-                {membersData?.items &&
-                  membersData?.items.map((member) => (
-                    <ActionAreaCard key={member.slug} {...member} />
-                  ))}
+                {membersData.map((member) => (
+                  <ActionAreaCard key={member.slug} {...member} />
+                ))}
                 {[0, 1, 2].map((v) => {
                   return (
                     <div

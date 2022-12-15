@@ -1,33 +1,29 @@
 // メンバー一覧の情報を取得するhooks
-// filterはこちら参照
-// https://developers.newt.so/apis/cdn#section/Queries/Filters
-
 import { useQuery } from '@tanstack/react-query'
+import { AxiosError } from 'axios'
 import { client } from '~/libs'
-import { SuccessResponse, Member, ErrorResponse } from '~/types'
+import { MemberJson } from '~/types'
 
-type Data = SuccessResponse<Member[]>
+type Data = MemberJson[]
 
 type Props = {
   skip: number
   limit: number
 }
 
-const path = `/json/member.json`
-
 export function useFetchMembers({ skip, limit }: Props) {
-  const query = useQuery<Data, ErrorResponse>({
-    queryKey: [path],
+  const query = useQuery<Data, AxiosError>({
+    queryKey: ['member'],
     queryFn: async () => {
       try {
-        const result = await client.get(path)
+        const result = await client.get(`/json/member.json`)
         return result.data
       } catch (e) {
         throw e
       }
     },
-    cacheTime: 1000 * 60 * 10, // 10分
-    staleTime: 1000 * 60 * 10, // 10分
+    cacheTime: 1000 * 60 * 5, // 5分
+    staleTime: 1000 * 60 * 5, // 5分
   })
 
   return query
