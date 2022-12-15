@@ -1,19 +1,17 @@
 // カテゴリ一覧の情報を取得するhooks
-// filterはこちら参照
-// https://developers.newt.so/apis/cdn#section/Queries/Filters
-
 import { useQuery } from '@tanstack/react-query'
+import { AxiosError } from 'axios'
 import { client } from '~/libs'
-import { SuccessResponse, Category, ErrorResponse } from '~/types'
+import { CategoryJson } from '~/types'
 
-type Data = SuccessResponse<Category[]>
+type Data = CategoryJson[]
 
 type Props = {
   category: 'hobby' | 'skill' | 'prefectures'
 }
 
 export function useFetchCategories({ category }: Props) {
-  const query = useQuery<Data, ErrorResponse>({
+  const query = useQuery<Data, AxiosError>({
     queryKey: ['category', category],
     queryFn: async () => {
       try {
@@ -23,8 +21,8 @@ export function useFetchCategories({ category }: Props) {
         throw e
       }
     },
-    cacheTime: 1000 * 60 * 10, // 10分
-    staleTime: 1000 * 60 * 10, // 10分
+    cacheTime: 1000 * 60 * 5, // 5分
+    staleTime: 1000 * 60 * 5, // 5分
   })
 
   return query

@@ -3,6 +3,19 @@
 
 import { Raw, Image } from './CommonCdnApiResponse'
 
+export type CategoryList = {
+  _id: string
+  _sys: {
+    raw: Raw
+    customOrder: number
+    createdAt: string
+    updatedAt: string
+  }
+  label: string
+  slug: string
+}
+
+// 元のAPIのデータ型
 export type Member = {
   _id: string
   _sys: {
@@ -29,14 +42,14 @@ export type Member = {
   }[]
 }
 
-export type CategoryList = {
-  _id: string
-  _sys: {
-    raw: Raw
-    customOrder: number
-    createdAt: string
-    updatedAt: string
-  }
-  label: string
+// APIから生成したJsonのデータ型
+export type MemberJson = {
+  name: string
   slug: string
+  role: '0' | '1'
+  thumbnail: Image
+  skill: CategoryList[]
+  hobby: CategoryList[]
+  prefectures: CategoryList[]
+  profile: string
 }
