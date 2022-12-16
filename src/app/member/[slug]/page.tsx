@@ -49,10 +49,6 @@ export default function Page({ params }: { params: { slug: string } }) {
         <Box
           sx={{
             my: 5,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
           }}
         >
           <Title text={data.name} />
