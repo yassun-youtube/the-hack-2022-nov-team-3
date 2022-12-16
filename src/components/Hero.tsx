@@ -5,8 +5,12 @@ import { css } from '@emotion/react'
 import Image from 'next/image'
 import Typography from '@mui/material/Typography'
 import { ThemeProvider } from '@mui/material/styles'
+import dayjs from 'dayjs'
+
+// theme
 import theme from '~/theme'
 
+// constants
 import { HERO_NO_IMAGE } from '~/constant'
 
 type Props = {
@@ -24,13 +28,16 @@ const Hero: FC<Props> = ({
   releaseDate,
   lastUpdatedDate,
 }: Props) => {
+  const releaseDateVal = dayjs(releaseDate).format('YYYY年MM月DD日 HH:mm')
+  const lastUpdatedDateVal = dayjs(lastUpdatedDate).format('YYYY年MM月DD日 HH:mm')
+
   return (
     <ThemeProvider theme={theme}>
       <div
         css={css`
           .relative {
             position: relative;
-            margin-bottom: 100px;
+            margin-bottom: 90px;
           }
           .hero_wrapper {
             position: relative;
@@ -55,7 +62,7 @@ const Hero: FC<Props> = ({
           .absolute {
             position: absolute;
             object-fit: cover;
-            bottom: -50px;
+            bottom: -30px;
             left: 20px;
             border: solid 3px #fff;
           }
@@ -89,14 +96,14 @@ const Hero: FC<Props> = ({
             priority={true}
           />
           <div className="datesParent">
-            {releaseDate && (
+            {releaseDateVal && (
               <div className="datesAndTimes">
-                <Typography>公開日：{releaseDate}</Typography>
+                <Typography>公開日：{releaseDateVal}</Typography>
               </div>
             )}
-            {lastUpdatedDate && (
+            {lastUpdatedDateVal && releaseDateVal !== releaseDateVal && (
               <div className="datesAndTimes">
-                <Typography>最終更新日：{lastUpdatedDate}</Typography>
+                <Typography>最終更新日：{lastUpdatedDateVal}</Typography>
               </div>
             )}
           </div>
