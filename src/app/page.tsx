@@ -6,7 +6,7 @@ import Container from '@mui/material/Container'
 import { css } from '@emotion/react'
 
 // components
-import { NormalButton, Title, Section, ActionAreaCard } from '~/components'
+import { NormalButton, Title, Section, ActionAreaCard, SkeletonBox } from '~/components'
 
 // hooks
 import { useFetchMembers, useFetchCategories } from '~/hooks'
@@ -48,10 +48,10 @@ export default function Page() {
         <Section>
           <Title text={'メンバーの絞り込み'} />
           <div style={{ display: 'flex' }}>
-            <ul>{skillData?.length && skillData.map((v) => <li key={v.slug}>{v.label}</li>)}</ul>
-            <ul>{hobbyData?.length && hobbyData.map((v) => <li key={v.slug}>{v.label}</li>)}</ul>
+            <ul>{!!skillData?.length && skillData.map((v) => <li key={v.slug}>{v.label}</li>)}</ul>
+            <ul>{!!hobbyData?.length && hobbyData.map((v) => <li key={v.slug}>{v.label}</li>)}</ul>
             <ul>
-              {prefecturesData?.length &&
+              {!!prefecturesData?.length &&
                 prefecturesData.map((v) => <li key={v.slug}>{v.label}</li>)}
             </ul>
           </div>
@@ -59,43 +59,53 @@ export default function Page() {
             検索条件をリセット
           </NormalButton>
         </Section>
-        {membersIsLoading && <>...isLoading</>}
-        {membersIsError && <>エラーです</>}
-        {membersData?.length && (
-          <div>
-            <Section>
-              <Title text={'メンバー'} />
-              <div
-                css={css`
-                  display: flex;
-                  flex-wrap: wrap;
-                  justify-content: space-between;
-                  width: 100%;
-                `}
-              >
-                {membersData.map((member) => (
-                  <ActionAreaCard key={member.slug} {...member} />
-                ))}
-                {[0, 1, 2].map((v) => {
-                  return (
-                    <div
-                      key={v}
-                      css={css`
-                        display: block;
-                        order: 1;
-                        width: calc(18%);
-                        @media screen and (max-width: 700px) {
-                          width: calc(31%);
-                        }
-                      `}
-                    ></div>
-                  )
-                })}
-              </div>
-            </Section>
-          </div>
-        )}
+
+        <div>
+          <Section>
+            <Title text={'メンバー'} />
+            {membersIsError && <>エラーです</>}
+            <div
+              css={css`
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                width: 100%;
+              `}
+            >
+              {membersIsLoading &&
+                [...new Array(10)].map((_, i) => <SkeletonBox _css={BannerWidthStyle} key={i} />)}
+              {!!membersData?.length && (
+                <>
+                  {membersData.map((member) => (
+                    <ActionAreaCard key={member.slug} {...member} />
+                  ))}
+                  {[0, 1, 2].map((v) => {
+                    return (
+                      <div
+                        key={v}
+                        css={css([
+                          BannerWidthStyle,
+                          `
+                          display: block;
+                          order: 1;
+                        `,
+                        ])}
+                      ></div>
+                    )
+                  })}
+                </>
+              )}
+            </div>
+          </Section>
+        </div>
       </Container>
     </>
   )
 }
+
+const BannerWidthStyle = css`
+  width: calc(18%);
+  @media screen and (max-width: 700px) {
+    width: calc(31%);
+  }
+`
