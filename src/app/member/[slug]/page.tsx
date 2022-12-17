@@ -11,7 +11,7 @@ import Box from '@mui/material/Box'
 import { useRouter, notFound } from 'next/navigation'
 
 // components
-import { NormalButton, Hero } from '~/components'
+import { NormalButton, Hero, LinkList } from '~/components'
 import Title from '~/components/Title'
 
 // libs
@@ -59,6 +59,8 @@ export default function Page({ params }: { params: { slug: string } }) {
             releaseDate={data._sys.createdAt}
             lastUpdatedDate={data._sys?.updatedAt}
           />
+          <Title text={'リンク集'} />
+          <LinkList links={data.links} />
           <Box
             sx={{
               my: 5,
