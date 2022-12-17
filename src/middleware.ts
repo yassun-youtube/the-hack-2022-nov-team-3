@@ -6,17 +6,21 @@ export const config = {
 
 export function middleware(req: NextRequest) {
   const basicAuth = req.headers.get('authorization')
-  const url = req.nextUrl
 
   if (basicAuth) {
-    const authValue = basicAuth.split(' ')[1]
-    const [user, pwd] = atob(authValue).split(':')
+    const auth = basicAuth.split(' ')[1]
+    const [user, pwd] = atob(auth).split(':')
+    const { BASIC_AUTH_USER, BASIC_AUTH_PASSWORD } = process.env
 
-    if (user === 'user' && pwd === 'pass') {
+    if (user === BASIC_AUTH_USER && pwd === BASIC_AUTH_PASSWORD) {
       return NextResponse.next()
     }
   }
-  url.pathname = '/api/auth'
 
-  return NextResponse.rewrite(url)
+  return new Response('Auth required', {
+    status: 401,
+    headers: {
+      'WWW-Authenticate': 'Basic realm="TheHack member only"',
+    },
+  })
 }
