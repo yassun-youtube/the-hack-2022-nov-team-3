@@ -1,25 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+export const config = {
+  matcher: ['/', '/member/:path*'],
+}
+
 export function middleware(req: NextRequest) {
   const basicAuth = req.headers.get('authorization')
+  const url = req.nextUrl
 
   if (basicAuth) {
-    const auth = basicAuth.split(' ')[1]
+    const authValue = basicAuth.split(' ')[1]
+    const [user, pwd] = atob(authValue).split(':')
 
-    // ここで BASE64 の decode を行っていますが、
-    // middleware は Edge Runtime 上で動くので、Node.js API の Buffer.from('', 'base64') は利用できないため、代わりに atob を利用しています。
-    // https://nextjs.org/docs/api-reference/edge-runtime#encoding-apis
-    const [user, pwd] = atob(auth).split(':')
-
-    if (user === 'hogehoge' && pwd === 'hogehoge') {
+    if (user === 'user' && pwd === 'pass') {
       return NextResponse.next()
     }
   }
+  url.pathname = '/api/auth'
 
-  return new Response('Auth required', {
-    status: 401,
-    headers: {
-      'WWW-Authenticate': 'Basic realm="TheHack member only"',
-    },
-  })
+  return NextResponse.rewrite(url)
 }
