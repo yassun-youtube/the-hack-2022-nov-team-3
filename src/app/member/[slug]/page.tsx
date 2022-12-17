@@ -11,7 +11,7 @@ import Box from '@mui/material/Box'
 import { useRouter, notFound } from 'next/navigation'
 
 // components
-import { NormalButton, Hero, Profile, Section, Title, LinkList } from '~/components'
+import { NormalButton, Hero, Profile, Title, LinkList, SkillList } from '~/components'
 
 // libs
 import { clientSDK } from '~/libs'
@@ -58,9 +58,11 @@ export default function Page({ params }: { params: { slug: string } }) {
             releaseDate={data._sys.createdAt}
             lastUpdatedDate={data._sys?.updatedAt}
           />
-
           <Title text={'プロフィール'} />
           <Profile text={data.profile} />
+
+          <Title text={'スキル'} />
+          <SkillList years_of_use={data.years_of_use} />
 
           <Title text={'リンク集'} />
           <LinkList links={data.links} />
