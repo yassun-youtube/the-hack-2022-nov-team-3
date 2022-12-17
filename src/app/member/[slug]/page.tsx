@@ -11,7 +11,7 @@ import Box from '@mui/material/Box'
 import { useRouter, notFound } from 'next/navigation'
 
 // components
-import { NormalButton, Hero, Profile, Title, LinkList, SkillList } from '~/components'
+import { NormalButton, Hero, Profile, Title, LinkList, SkillList, TagList } from '~/components'
 
 // libs
 import { clientSDK } from '~/libs'
@@ -66,6 +66,9 @@ export default function Page({ params }: { params: { slug: string } }) {
 
           <Title text={'リンク集'} />
           <LinkList links={data.links} />
+
+          <Title text={'タグ'} />
+          <TagList skill={data.skill} hobby={data.hobby} prefectures={data.prefectures} />
 
           <Box
             sx={{
