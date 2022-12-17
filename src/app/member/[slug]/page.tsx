@@ -49,10 +49,6 @@ export default function Page({ params }: { params: { slug: string } }) {
         <Box
           sx={{
             my: 5,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
           }}
         >
           <Title text={data.name} />
@@ -63,9 +59,19 @@ export default function Page({ params }: { params: { slug: string } }) {
             releaseDate={data._sys.createdAt}
             lastUpdatedDate={data._sys?.updatedAt}
           />
-          <NormalButton variant="contained" clickHandler={() => router.push('/')}>
-            一覧に戻る
-          </NormalButton>
+          <Box
+            sx={{
+              my: 5,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <NormalButton variant="contained" clickHandler={() => router.push('/')}>
+              一覧に戻る
+            </NormalButton>
+          </Box>
         </Box>
       </Container>
     </>
