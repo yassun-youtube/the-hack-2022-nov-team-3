@@ -33,6 +33,7 @@ const ActionAreaCard: React.FC<Props> = ({ thumbnail, name, slug, profile, role 
       `}
     >
       <Link
+        prefetch={false}
         href={`/member/${slug}`}
         css={css`
           text-decoration: none;
