@@ -54,7 +54,10 @@ if (!fs.existsSync(jsonDir)) {
             }
           })
         })
-        .catch((e) => [])
+        .catch((e) => {
+          console.log(key + ' data is failed')
+          return []
+        })
       results[key] = [...results[key], ...result]
     }
   })
@@ -71,7 +74,10 @@ if (!fs.existsSync(jsonDir)) {
         }
         return items
       })
-      .catch((e) => [])
+      .catch((e) => {
+        console.log('member data is failed')
+        return []
+      })
     results['member'] = [...results['member'], ...result]
   }
 
