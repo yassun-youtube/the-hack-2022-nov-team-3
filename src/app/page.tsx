@@ -4,6 +4,7 @@ import { useState } from 'react'
 import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
 import { css } from '@emotion/react'
+import Typography from '@mui/material/Typography'
 
 // components
 import { NormalButton, Title, Section, ActionAreaCard, SkeletonBox } from '~/components'
@@ -63,7 +64,18 @@ export default function Page() {
         <div>
           <Section>
             <Title text={'メンバー'} />
-            {membersIsError && <>エラーです</>}
+            {membersIsError && (
+              <Typography
+                variant="h6"
+                color={'#ff0000'}
+                css={css`
+                  margin: 0 0 30px;
+                  font-weight: bold;
+                `}
+              >
+                エラーが発生しました
+              </Typography>
+            )}
             <div
               css={css`
                 display: flex;
