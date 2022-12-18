@@ -56,13 +56,41 @@ export default function Page() {
       <Container maxWidth="lg">
         <Section>
           <Title text={'メンバーの絞り込み'} />
-          <div style={{ display: 'flex' }}>
-            <ul>{!!skillData?.length && skillData.map((v) => <li key={v.slug}>{v.label}</li>)}</ul>
-            <ul>{!!hobbyData?.length && hobbyData.map((v) => <li key={v.slug}>{v.label}</li>)}</ul>
-            <ul>
-              {!!prefecturesData?.length &&
-                prefecturesData.map((v) => <li key={v.slug}>{v.label}</li>)}
-            </ul>
+          <div
+            css={css`
+              display: flex;
+              justify-content: space-between;
+              margin-bottom: 50px;
+              width: 100%;
+            `}
+          >
+            {!!skillData?.length && (
+              <MultipleSelectChip
+                labelName={'スキル'}
+                categoryItemList={skillData}
+                changeHandler={(data) => {
+                  return data
+                }}
+              />
+            )}
+            {!!hobbyData?.length && (
+              <MultipleSelectChip
+                labelName={'趣味'}
+                categoryItemList={hobbyData}
+                changeHandler={(data) => {
+                  return data
+                }}
+              />
+            )}
+            {!!prefecturesData?.length && (
+              <MultipleSelectChip
+                labelName={'都道府県'}
+                categoryItemList={prefecturesData}
+                changeHandler={(data) => {
+                  return data
+                }}
+              />
+            )}
           </div>
           <NormalButton variant="contained" clickHandler={() => alert('reset')}>
             検索条件をリセット

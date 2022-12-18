@@ -10,6 +10,9 @@ import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Chip from '@mui/material/Chip'
 
+// type
+import { CategoryJson } from '~/types'
+
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
 const MenuProps = {
@@ -32,7 +35,7 @@ const getStyles = (name: string, categoryName: readonly string[], theme: Theme) 
 
 type Props = {
   labelName: string
-  categoryItemList: string[]
+  categoryItemList: CategoryJson[]
   changeHandler: (value: string[]) => string[]
 }
 
@@ -50,42 +53,36 @@ const MultipleSelectChip: FC<Props> = ({ labelName, categoryItemList, changeHand
     )
   }
 
-  useEffect(() => {
-    // 実行したい処理
-    changeHandler(categoryName)
-    return () => {
-      // cleanupの処理
-    }
-  }, [categoryName])
-
   return (
-    <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-chip-label">{labelName}</InputLabel>
-        <Select
-          labelId="demo-multiple-chip-label"
-          id="demo-multiple-chip"
-          multiple
-          value={categoryName}
-          onChange={handleChange}
-          input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-          renderValue={(selected) => (
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-              {selected.map((value) => (
-                <Chip key={value} label={value} />
-              ))}
-            </Box>
-          )}
-          MenuProps={MenuProps}
-        >
-          {categoryItemList.map((item) => (
-            <MenuItem key={item} value={item} style={getStyles(item, categoryName, theme)}>
-              {item}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </div>
+    <FormControl sx={{ width: '32%' }}>
+      <InputLabel id="demo-multiple-chip-label">{labelName}</InputLabel>
+      <Select
+        labelId="demo-multiple-chip-label"
+        id="demo-multiple-chip"
+        multiple
+        value={categoryName}
+        onChange={handleChange}
+        input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+        renderValue={(selected) => (
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+            {selected.map((value) => (
+              <Chip key={value} label={value} />
+            ))}
+          </Box>
+        )}
+        MenuProps={MenuProps}
+      >
+        {categoryItemList.map((item) => (
+          <MenuItem
+            key={item.slug}
+            value={item.label}
+            style={getStyles(item.label, categoryName, theme)}
+          >
+            {item.label}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   )
 }
 
