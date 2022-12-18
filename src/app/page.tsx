@@ -7,7 +7,15 @@ import { css } from '@emotion/react'
 import Typography from '@mui/material/Typography'
 
 // components
-import { NormalButton, Title, Section, ActionAreaCard, SkeletonBox } from '~/components'
+import {
+  NormalButton,
+  Title,
+  Section,
+  ActionAreaCard,
+  SkeletonBox,
+  MultipleSelectChip,
+  PaginationRanges,
+} from '~/components'
 
 // hooks
 import { useFetchMembers, useFetchCategories } from '~/hooks'
@@ -60,56 +68,63 @@ export default function Page() {
             検索条件をリセット
           </NormalButton>
         </Section>
-
-        <div>
-          <Section>
-            <Title text={'メンバー'} />
-            {membersIsError && (
-              <Typography
-                variant="h6"
-                color={'#ff0000'}
-                css={css`
-                  margin: 0 0 30px;
-                  font-weight: bold;
-                `}
-              >
-                エラーが発生しました
-              </Typography>
-            )}
-            <div
+        <Section>
+          <Title text={'メンバー'} />
+          {membersIsError && (
+            <Typography
+              variant="h6"
+              color={'#ff0000'}
               css={css`
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: space-between;
-                width: 100%;
+                margin: 0 0 30px;
+                font-weight: bold;
               `}
             >
-              {membersIsLoading &&
-                [...new Array(10)].map((_, i) => <SkeletonBox _css={BannerWidthStyle} key={i} />)}
-              {!!membersData?.length && (
-                <>
-                  {membersData.map((member) => (
-                    <ActionAreaCard key={member.slug} {...member} />
-                  ))}
-                  {[0, 1, 2].map((v) => {
-                    return (
-                      <div
-                        key={v}
-                        css={css([
-                          BannerWidthStyle,
-                          `
+              エラーが発生しました
+            </Typography>
+          )}
+          <div
+            css={css`
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: space-between;
+              width: 100%;
+            `}
+          >
+            {membersIsLoading &&
+              [...new Array(10)].map((_, i) => <SkeletonBox _css={BannerWidthStyle} key={i} />)}
+            {!!membersData?.length && (
+              <>
+                {membersData.map((member) => (
+                  <ActionAreaCard key={member.slug} {...member} />
+                ))}
+                {[0, 1, 2].map((v) => {
+                  return (
+                    <div
+                      key={v}
+                      css={css([
+                        BannerWidthStyle,
+                        `
                           display: block;
                           order: 1;
                         `,
-                        ])}
-                      ></div>
-                    )
-                  })}
-                </>
-              )}
-            </div>
-          </Section>
-        </div>
+                      ])}
+                    ></div>
+                  )
+                })}
+              </>
+            )}
+          </div>
+        </Section>
+        <Section>
+          <PaginationRanges
+            itemCount={4}
+            pageSize={4}
+            defaultPage={4}
+            siblingCount={4}
+            boundaryCount={4}
+            changeHandler={() => {}}
+          />
+        </Section>
       </Container>
     </>
   )

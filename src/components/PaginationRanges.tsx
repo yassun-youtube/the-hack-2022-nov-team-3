@@ -24,13 +24,19 @@ const PaginationRanges: FC<Props> = ({
   changeHandler,
 }: Props) => {
   return (
-    <Stack spacing={2}>
+    <Stack
+      spacing={2}
+      css={css`
+        margin-bottom: 20px;
+      `}
+    >
       <Pagination
         renderItem={(item) => (
           <PaginationItem
             {...item}
             css={css`
               background-color: rgba(0, 0, 0, 0) !important;
+              font-size: 18px;
             `}
           />
         )}
