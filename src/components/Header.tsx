@@ -36,7 +36,6 @@ export default function Header() {
       >
         <NextLink href={'/'}>{SITE_TITLE}</NextLink>
       </Typography>
-      <ExternalLink url={MICROCMS_ADMIN} title={'ログイン'} color={'#fff'} />
     </header>
   )
 }
