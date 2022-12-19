@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 'use client'
-import { useMemo, useCallback, useState } from 'react'
+import { useMemo, useState, useRef } from 'react'
 import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
 import { css } from '@emotion/react'
@@ -29,6 +29,11 @@ export default function Page() {
   const [selectedSkill, setSelectedSkill] = useState<string[]>([])
   const [selectedHobby, setSelectedHobby] = useState<string[]>([])
   const [selectedPrefectures, setSelectedPrefectures] = useState<string[]>([])
+
+  const cate1Ref = useRef<{ resetCategories: () => void }>(null)
+  const cate2Ref = useRef<{ resetCategories: () => void }>(null)
+  const cate3Ref = useRef<{ resetCategories: () => void }>(null)
+
   const {
     data: membersData,
     isError: membersIsError,
@@ -52,6 +57,12 @@ export default function Page() {
     isLoading: prefecturesIsLoading,
     error: prefecturesError,
   } = useFetchCategories({ category: 'prefectures' }) // 都道府県のデータを取得
+
+  const resetCategories = () => {
+    cate1Ref.current?.resetCategories()
+    cate2Ref.current?.resetCategories()
+    cate3Ref.current?.resetCategories()
+  }
 
   const checkExistCategory = ({ target, search }: { target: string[]; search: string[] }) => {
     if (search.length === 0) return true
@@ -100,6 +111,7 @@ export default function Page() {
                   <MultipleSelectChip
                     labelName={'スキル'}
                     categoryItemList={skillData}
+                    ref={cate1Ref}
                     changeHandler={(data) => {
                       setSelectedSkill(data)
                     }}
@@ -109,6 +121,7 @@ export default function Page() {
                   <MultipleSelectChip
                     labelName={'趣味'}
                     categoryItemList={hobbyData}
+                    ref={cate2Ref}
                     changeHandler={(data) => {
                       setSelectedHobby(data)
                     }}
@@ -118,6 +131,7 @@ export default function Page() {
                   <MultipleSelectChip
                     labelName={'住んでいる都道府県'}
                     categoryItemList={prefecturesData}
+                    ref={cate3Ref}
                     changeHandler={(data) => {
                       setSelectedPrefectures(data)
                     }}
@@ -126,7 +140,7 @@ export default function Page() {
               </>
             )}
           </div>
-          <NormalButton variant="contained" clickHandler={() => alert('reset')}>
+          <NormalButton variant="contained" clickHandler={resetCategories}>
             検索条件をリセット
           </NormalButton>
         </Section>

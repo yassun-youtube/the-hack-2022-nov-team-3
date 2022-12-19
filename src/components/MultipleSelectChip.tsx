@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 'use client'
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useState, forwardRef, useImperativeHandle } from 'react'
 import { Theme, useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import OutlinedInput from '@mui/material/OutlinedInput'
@@ -39,7 +39,10 @@ type Props = {
   changeHandler: (value: string[]) => void
 }
 
-const MultipleSelectChip: FC<Props> = ({ labelName, categoryItemList, changeHandler }) => {
+const MultipleSelectChip = forwardRef<{ resetCategories: () => void }, Props>(function SelectChip(
+  { labelName, categoryItemList, changeHandler },
+  ref,
+) {
   const theme = useTheme()
   const [categoryName, setCategoryName] = useState<string[]>([])
 
@@ -52,6 +55,12 @@ const MultipleSelectChip: FC<Props> = ({ labelName, categoryItemList, changeHand
       typeof value === 'string' ? value.split(',') : value,
     )
   }
+
+  useImperativeHandle(ref, () => ({
+    resetCategories: () => {
+      setCategoryName([])
+    },
+  }))
 
   useEffect(() => {
     changeHandler(categoryName)
@@ -95,6 +104,6 @@ const MultipleSelectChip: FC<Props> = ({ labelName, categoryItemList, changeHand
       </Select>
     </FormControl>
   )
-}
+})
 
 export default MultipleSelectChip
