@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 'use client'
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import { css } from '@emotion/react'
@@ -23,6 +23,13 @@ const PaginationRanges: FC<Props> = ({
   boundaryCount,
   changeHandler,
 }: Props) => {
+  const [defaultPageVal, setDefaultPageVal] = useState<null | number>(null)
+
+  useEffect(() => {
+    setDefaultPageVal(defaultPage)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <Stack
       spacing={2}
@@ -30,27 +37,29 @@ const PaginationRanges: FC<Props> = ({
         margin-bottom: 20px;
       `}
     >
-      <Pagination
-        renderItem={(item) => {
-          return (
-            <PaginationItem
-              {...item}
-              css={css`
-                background-color: rgba(0, 0, 0, 0) !important;
-                font-size: 18px;
-                font-weight: ${item.selected ? 'bold' : 'normal'};
-              `}
-            />
-          )
-        }}
-        count={Math.ceil(itemCount / pageSize)}
-        defaultPage={defaultPage}
-        siblingCount={siblingCount}
-        boundaryCount={boundaryCount}
-        onChange={(event: React.ChangeEvent<unknown>, page: number) => {
-          changeHandler(page)
-        }}
-      />
+      {defaultPageVal && (
+        <Pagination
+          renderItem={(item) => {
+            return (
+              <PaginationItem
+                {...item}
+                css={css`
+                  background-color: rgba(0, 0, 0, 0) !important;
+                  font-size: 18px;
+                  font-weight: ${item.selected ? 'bold' : 'normal'};
+                `}
+              />
+            )
+          }}
+          count={Math.ceil(itemCount / pageSize)}
+          defaultPage={defaultPageVal}
+          siblingCount={siblingCount}
+          boundaryCount={boundaryCount}
+          onChange={(event: React.ChangeEvent<unknown>, page: number) => {
+            changeHandler(page)
+          }}
+        />
+      )}
     </Stack>
   )
 }

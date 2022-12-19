@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 'use client'
-import { useMemo, useState, useRef } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useMemo, useState, useRef, useEffect } from 'react'
 import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
 import { css } from '@emotion/react'
@@ -21,11 +22,21 @@ import {
 // hooks
 import { useFetchMembers, useFetchCategories } from '~/hooks'
 
+// 1ページ当たりのメンバー
+const unit = 5
+
 export default function Page() {
-  const [useParams, setUseParams] = useState({
-    skip: 0,
-    limit: 100,
-  })
+  const router = useRouter()
+  const params = useSearchParams()
+
+  const currentPage = useMemo(() => {
+    const val = Number(params.get('page'))
+    if (Number.isNaN(val) || val === 0) {
+      return 1
+    }
+    return val
+  }, [params])
+
   const [selectedSkill, setSelectedSkill] = useState<string[]>([])
   const [selectedHobby, setSelectedHobby] = useState<string[]>([])
   const [selectedPrefectures, setSelectedPrefectures] = useState<string[]>([])
@@ -170,9 +181,9 @@ export default function Page() {
               [...new Array(10)].map((_, i) => <SkeletonBox _css={BannerWidthStyle} key={i} />)}
             {!!filteredData?.length && (
               <>
-                {filteredData.map((member) => (
-                  <ActionAreaCard key={member.slug} {...member} />
-                ))}
+                {filteredData
+                  .map((member) => <ActionAreaCard key={member.slug} {...member} />)
+                  .slice((currentPage - 1) * unit, currentPage * unit)}
                 {[0, 1, 2].map((v) => {
                   return (
                     <div
@@ -195,12 +206,12 @@ export default function Page() {
           {!!filteredData?.length && (
             <PaginationRanges
               itemCount={filteredData?.length}
-              pageSize={4}
-              defaultPage={1}
+              pageSize={unit}
+              defaultPage={currentPage}
               siblingCount={3}
               boundaryCount={1}
               changeHandler={(page) => {
-                console.log(page)
+                router.push(`/?page=${page}`)
               }}
             />
           )}
