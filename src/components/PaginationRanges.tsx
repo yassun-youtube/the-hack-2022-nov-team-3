@@ -12,7 +12,7 @@ type Props = {
   defaultPage: number
   siblingCount: number
   boundaryCount: number
-  changeHandler: () => void
+  changeHandler: (current: number) => void
 }
 
 const PaginationRanges: FC<Props> = ({
@@ -31,20 +31,25 @@ const PaginationRanges: FC<Props> = ({
       `}
     >
       <Pagination
-        renderItem={(item) => (
-          <PaginationItem
-            {...item}
-            css={css`
-              background-color: rgba(0, 0, 0, 0) !important;
-              font-size: 18px;
-            `}
-          />
-        )}
+        renderItem={(item) => {
+          return (
+            <PaginationItem
+              {...item}
+              css={css`
+                background-color: rgba(0, 0, 0, 0) !important;
+                font-size: 18px;
+                font-weight: ${item.selected ? 'bold' : 'normal'};
+              `}
+            />
+          )
+        }}
         count={Math.ceil(itemCount / pageSize)}
         defaultPage={defaultPage}
         siblingCount={siblingCount}
         boundaryCount={boundaryCount}
-        onChange={changeHandler}
+        onChange={(event: React.ChangeEvent<unknown>, page: number) => {
+          changeHandler(page)
+        }}
       />
     </Stack>
   )

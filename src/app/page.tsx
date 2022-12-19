@@ -38,7 +38,7 @@ export default function Page() {
     data: membersData,
     isError: membersIsError,
     isLoading: membersIsLoading,
-  } = useFetchMembers(useParams) // メンバーのデータを取得
+  } = useFetchMembers() // メンバーのデータを取得
   const {
     data: skillData,
     isError: skillIsError,
@@ -184,7 +184,7 @@ export default function Page() {
                           order: 1;
                         `,
                       ])}
-                    ></div>
+                    />
                   )
                 })}
               </>
@@ -192,14 +192,18 @@ export default function Page() {
           </div>
         </Section>
         <Section>
-          <PaginationRanges
-            itemCount={4}
-            pageSize={4}
-            defaultPage={4}
-            siblingCount={4}
-            boundaryCount={4}
-            changeHandler={() => {}}
-          />
+          {!!filteredData?.length && (
+            <PaginationRanges
+              itemCount={filteredData?.length}
+              pageSize={4}
+              defaultPage={1}
+              siblingCount={3}
+              boundaryCount={1}
+              changeHandler={(page) => {
+                console.log(page)
+              }}
+            />
+          )}
         </Section>
       </Container>
     </>

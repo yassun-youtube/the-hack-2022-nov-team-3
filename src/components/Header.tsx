@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography'
 import { ExternalLink } from '~/components'
 
 // constants
-import { SITE_TITLE, MICROCMS_ADMIN } from '~/constant'
+import { SITE_TITLE } from '~/constant'
 
 export default function Header() {
   return (

@@ -6,12 +6,7 @@ import { MemberJson } from '~/types'
 
 type Data = MemberJson[]
 
-type Props = {
-  skip: number
-  limit: number
-}
-
-export function useFetchMembers({ skip, limit }: Props) {
+export function useFetchMembers() {
   const query = useQuery<Data, AxiosError>({
     queryKey: ['member'],
     queryFn: async () => {
