@@ -1,10 +1,11 @@
 /** @jsxImportSource @emotion/react */
 'use client'
-import { useState } from 'react'
+import { useMemo, useCallback, useState } from 'react'
 import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
 import { css } from '@emotion/react'
 import Typography from '@mui/material/Typography'
+import Skeleton from '@mui/material/Skeleton'
 
 // components
 import {
@@ -25,18 +26,14 @@ export default function Page() {
     skip: 0,
     limit: 100,
   })
+  const [selectedSkill, setSelectedSkill] = useState<string[]>([])
+  const [selectedHobby, setSelectedHobby] = useState<string[]>([])
+  const [selectedPrefectures, setSelectedPrefectures] = useState<string[]>([])
   const {
     data: membersData,
     isError: membersIsError,
     isLoading: membersIsLoading,
-    error: membersError,
   } = useFetchMembers(useParams) // メンバーのデータを取得
-  const {
-    data: hobbyData,
-    isError: hobbyIsError,
-    isLoading: hobbyLoading,
-    error: hobbyError,
-  } = useFetchCategories({ category: 'hobby' }) // 趣味のデータを取得
   const {
     data: skillData,
     isError: skillIsError,
@@ -44,11 +41,38 @@ export default function Page() {
     error: skillError,
   } = useFetchCategories({ category: 'skill' }) // 技術のデータを取得
   const {
+    data: hobbyData,
+    isLoading: hobbyLoading,
+    error: hobbyError,
+  } = useFetchCategories({ category: 'hobby' }) // 趣味のデータを取得
+
+  const {
     data: prefecturesData,
     isError: prefecturesIsError,
     isLoading: prefecturesIsLoading,
     error: prefecturesError,
   } = useFetchCategories({ category: 'prefectures' }) // 都道府県のデータを取得
+
+  const checkExistCategory = ({ target, search }: { target: string[]; search: string[] }) => {
+    if (search.length === 0) return true
+    return target.some((v) => search.includes(v))
+  }
+
+  // フィルタリングされたメンバー一覧
+  const filteredData = useMemo(() => {
+    return membersData?.filter((member) => {
+      const { skill, hobby, prefectures } = member
+      const skillVal = skill.map((v) => v.label)
+      const hobbyVal = hobby.map((v) => v.label)
+      const prefecturesVal = prefectures.map((v) => v.label)
+
+      return (
+        checkExistCategory({ target: skillVal, search: selectedSkill }) &&
+        checkExistCategory({ target: hobbyVal, search: selectedHobby }) &&
+        checkExistCategory({ target: prefecturesVal, search: selectedPrefectures })
+      )
+    })
+  }, [membersData, selectedSkill, selectedHobby, selectedPrefectures])
 
   return (
     <>
@@ -58,38 +82,48 @@ export default function Page() {
           <Title text={'メンバーの絞り込み'} />
           <div
             css={css`
-              display: flex;
-              justify-content: space-between;
               margin-bottom: 50px;
               width: 100%;
+              display: flex;
+              justify-content: space-between;
             `}
           >
-            {!!skillData?.length && (
-              <MultipleSelectChip
-                labelName={'スキル'}
-                categoryItemList={skillData}
-                changeHandler={(data) => {
-                  return data
-                }}
-              />
-            )}
-            {!!hobbyData?.length && (
-              <MultipleSelectChip
-                labelName={'趣味'}
-                categoryItemList={hobbyData}
-                changeHandler={(data) => {
-                  return data
-                }}
-              />
-            )}
-            {!!prefecturesData?.length && (
-              <MultipleSelectChip
-                labelName={'都道府県'}
-                categoryItemList={prefecturesData}
-                changeHandler={(data) => {
-                  return data
-                }}
-              />
+            {[skillIsLoading, hobbyLoading, prefecturesIsLoading].some((v) => v) ? (
+              <>
+                {[...new Array(3)].map((_, i) => (
+                  <Skeleton key={i} variant="rounded" width={'32%'} height={56} />
+                ))}
+              </>
+            ) : (
+              <>
+                {!!skillData?.length && (
+                  <MultipleSelectChip
+                    labelName={'スキル'}
+                    categoryItemList={skillData}
+                    changeHandler={(data) => {
+                      setSelectedSkill(data)
+                    }}
+                  />
+                )}
+                {!!hobbyData?.length && (
+                  <MultipleSelectChip
+                    labelName={'趣味'}
+                    categoryItemList={hobbyData}
+                    changeHandler={(data) => {
+                      setSelectedHobby(data)
+                    }}
+                  />
+                )}
+                {!!prefecturesData?.length && (
+                  <MultipleSelectChip
+                    labelName={'住んでいる都道府県'}
+                    categoryItemList={prefecturesData}
+                    changeHandler={(data) => {
+                      setSelectedPrefectures(data)
+                    }}
+                  />
+                )}
+              </>
             )}
           </div>
           <NormalButton variant="contained" clickHandler={() => alert('reset')}>
@@ -120,9 +154,9 @@ export default function Page() {
           >
             {membersIsLoading &&
               [...new Array(10)].map((_, i) => <SkeletonBox _css={BannerWidthStyle} key={i} />)}
-            {!!membersData?.length && (
+            {!!filteredData?.length && (
               <>
-                {membersData.map((member) => (
+                {filteredData.map((member) => (
                   <ActionAreaCard key={member.slug} {...member} />
                 ))}
                 {[0, 1, 2].map((v) => {

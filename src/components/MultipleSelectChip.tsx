@@ -9,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Chip from '@mui/material/Chip'
+import { css } from '@emotion/react'
 
 // type
 import { CategoryJson } from '~/types'
@@ -19,7 +20,6 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
     },
   },
 }
@@ -36,7 +36,7 @@ const getStyles = (name: string, categoryName: readonly string[], theme: Theme) 
 type Props = {
   labelName: string
   categoryItemList: CategoryJson[]
-  changeHandler: (value: string[]) => string[]
+  changeHandler: (value: string[]) => void
 }
 
 const MultipleSelectChip: FC<Props> = ({ labelName, categoryItemList, changeHandler }) => {
@@ -53,9 +53,20 @@ const MultipleSelectChip: FC<Props> = ({ labelName, categoryItemList, changeHand
     )
   }
 
+  useEffect(() => {
+    changeHandler(categoryName)
+  }, [changeHandler, categoryName])
+
   return (
     <FormControl sx={{ width: '32%' }}>
-      <InputLabel id="demo-multiple-chip-label">{labelName}</InputLabel>
+      <InputLabel
+        id="demo-multiple-chip-label"
+        css={css`
+          background: #fff;
+        `}
+      >
+        {labelName}
+      </InputLabel>
       <Select
         labelId="demo-multiple-chip-label"
         id="demo-multiple-chip"
