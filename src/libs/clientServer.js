@@ -16,7 +16,7 @@ const filePath = (filename) => jsonDir + `/${filename}.json`
 
 const instance = axios.create({
   baseURL: `https://${process?.env?.NEXT_PUBLIC_NEWT_SERVICE_DOMAIN}.cdn.newt.so/v1`,
-  timeout: 1000,
+  timeout: 10000,
   headers: {
     Authorization: `Bearer ${process?.env?.NEXT_PUBLIC_NEWT_CDN_API_TOKEN}`,
   },
