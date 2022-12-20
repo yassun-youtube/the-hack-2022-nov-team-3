@@ -13,6 +13,7 @@ import { css } from '@emotion/react'
 
 // type
 import { CategoryJson } from '~/types'
+import { useRouter } from 'next/navigation'
 
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
@@ -34,37 +35,27 @@ const getStyles = (name: string, categoryName: readonly string[], theme: Theme) 
 }
 
 type Props = {
+  field: string
   labelName: string
   categoryItemList: CategoryJson[]
-  changeHandler: (value: string[]) => void
 }
 
 const MultipleSelectChip = forwardRef<{ resetCategories: () => void }, Props>(function SelectChip(
-  { labelName, categoryItemList, changeHandler },
+  { field, labelName, categoryItemList },
   ref,
 ) {
   const theme = useTheme()
-  const [categoryName, setCategoryName] = useState<string[]>([])
+  const router = useRouter()
 
-  const handleChange = (event: SelectChangeEvent<typeof categoryName>) => {
+  const handleChange = (event: SelectChangeEvent<string[]>) => {
     const {
       target: { value },
     } = event
-    setCategoryName(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    )
+    router.replace('/?hoge=111')
+    // changeHandler(typeof value === 'string' ? value.split(',') : value);
   }
 
-  useImperativeHandle(ref, () => ({
-    resetCategories: () => {
-      setCategoryName([])
-    },
-  }))
-
-  useEffect(() => {
-    changeHandler(categoryName)
-  }, [changeHandler, categoryName])
+  useImperativeHandle(ref, () => ({ resetCategories: () => setCategoryName([]) }))
 
   return (
     <FormControl sx={{ width: '32%' }}>
@@ -80,9 +71,9 @@ const MultipleSelectChip = forwardRef<{ resetCategories: () => void }, Props>(fu
         labelId="demo-multiple-chip-label"
         id="demo-multiple-chip"
         multiple
-        value={categoryName}
         onChange={handleChange}
         input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+        MenuProps={MenuProps}
         renderValue={(selected) => (
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
             {selected.map((value) => (
@@ -90,12 +81,14 @@ const MultipleSelectChip = forwardRef<{ resetCategories: () => void }, Props>(fu
             ))}
           </Box>
         )}
-        MenuProps={MenuProps}
       >
         {categoryItemList.map((item) => (
           <MenuItem
             key={item.slug}
             value={item.label}
+            css={css`
+                font-weight: {categoryName.indexOf(name) === -1};
+            `}
             style={getStyles(item.label, categoryName, theme)}
           >
             {item.label}

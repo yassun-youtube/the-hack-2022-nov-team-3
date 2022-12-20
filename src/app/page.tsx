@@ -1,12 +1,15 @@
 /** @jsxImportSource @emotion/react */
 'use client'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useMemo, useState, useRef, useEffect } from 'react'
+import { useMemo, useState, useRef } from 'react'
 import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
 import { css } from '@emotion/react'
 import Typography from '@mui/material/Typography'
 import Skeleton from '@mui/material/Skeleton'
+
+// libs
+import { setQueryParams } from '~/libs'
 
 // components
 import {
@@ -31,9 +34,7 @@ export default function Page() {
 
   const currentPage = useMemo(() => {
     const val = Number(params.get('page'))
-    if (Number.isNaN(val) || val === 0) {
-      return 1
-    }
+    if (Number.isNaN(val) || val === 0) return 1
     return val
   }, [params])
 
@@ -69,15 +70,25 @@ export default function Page() {
     error: prefecturesError,
   } = useFetchCategories({ category: 'prefectures' }) // 都道府県のデータを取得
 
-  const resetCategories = () => {
+  const reset = () => {
     cate1Ref.current?.resetCategories()
     cate2Ref.current?.resetCategories()
     cate3Ref.current?.resetCategories()
+    router.push('/')
   }
 
   const checkExistCategory = ({ target, search }: { target: string[]; search: string[] }) => {
     if (search.length === 0) return true
     return target.some((v) => search.includes(v))
+  }
+
+  const changeToString = (param: string | string[] | undefined): string => {
+    if (Array.isArray(param)) {
+      return param[0]
+    } else if (param === undefined) {
+      return ''
+    }
+    return param
   }
 
   // フィルタリングされたメンバー一覧
@@ -121,37 +132,34 @@ export default function Page() {
                 {!!skillData?.length && (
                   <MultipleSelectChip
                     labelName={'スキル'}
+                    field={'skill'}
                     categoryItemList={skillData}
                     ref={cate1Ref}
-                    changeHandler={(data) => {
-                      setSelectedSkill(data)
-                    }}
+                    // changeHandler={(data) => setSelectedSkill(data)}
                   />
                 )}
                 {!!hobbyData?.length && (
                   <MultipleSelectChip
                     labelName={'趣味'}
+                    field={'hobby'}
                     categoryItemList={hobbyData}
                     ref={cate2Ref}
-                    changeHandler={(data) => {
-                      setSelectedHobby(data)
-                    }}
+                    // changeHandler={(data) => setSelectedHobby(data)}
                   />
                 )}
                 {!!prefecturesData?.length && (
                   <MultipleSelectChip
                     labelName={'住んでいる都道府県'}
+                    field={'prefectures'}
                     categoryItemList={prefecturesData}
                     ref={cate3Ref}
-                    changeHandler={(data) => {
-                      setSelectedPrefectures(data)
-                    }}
+                    //                    changeHandler={(data) => setSelectedPrefectures(data)}
                   />
                 )}
               </>
             )}
           </div>
-          <NormalButton variant="contained" clickHandler={resetCategories}>
+          <NormalButton variant="contained" clickHandler={reset}>
             検索条件をリセット
           </NormalButton>
         </Section>
@@ -211,7 +219,8 @@ export default function Page() {
               siblingCount={3}
               boundaryCount={1}
               changeHandler={(page) => {
-                router.push(`/?page=${page}`)
+                const q = setQueryParams({ page: String(page) })
+                router.push(`/${q}`)
               }}
             />
           )}
