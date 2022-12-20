@@ -39,19 +39,26 @@ export default function Page() {
   const router = useRouter()
   const params = useSearchParams()
 
+  // メンバーのデータを取得
   const {
     data: membersData,
     isError: membersIsError,
     isLoading: membersIsLoading,
-  } = useFetchMembers() // メンバーのデータを取得
-  const { data: skillData, isLoading: skillIsLoading } = useFetchCategories({ category: 'skill' }) // 技術のデータを取得
-  const { data: hobbyData, isLoading: hobbyLoading } = useFetchCategories({ category: 'hobby' }) // 趣味のデータを取得
+  } = useFetchMembers()
+
+  // 技術のデータを取得
+  const { data: skillData, isLoading: skillIsLoading } = useFetchCategories({ category: 'skill' })
+
+  // 趣味のデータを取得
+  const { data: hobbyData, isLoading: hobbyLoading } = useFetchCategories({ category: 'hobby' })
+
+  // 都道府県のデータを取得
   const { data: prefecturesData, isLoading: prefecturesIsLoading } = useFetchCategories({
     category: 'prefectures',
-  }) // 都道府県のデータを取得
+  })
 
   // 検索条件をリセット
-  const reset = () => router.push('/')
+  const resetSearchParams = () => router.push('/')
 
   // 各カテゴリーデータが空かチェック
   const isEmptySkill = useMemo(() => isEmptyObject(skillData), [skillData])
@@ -130,14 +137,7 @@ export default function Page() {
         {/* ======================メンバーの絞り込み=========================== */}
         <Section>
           <Title text={'メンバーの絞り込み'} />
-          <div
-            css={css`
-              margin-bottom: 50px;
-              width: 100%;
-              display: flex;
-              justify-content: space-between;
-            `}
-          >
+          <div css={SideListStyle}>
             {[skillIsLoading, hobbyLoading, prefecturesIsLoading].some((v) => v) ? (
               <RepeatComponent count={3}>
                 <Skeleton variant="rounded" width={'32%'} height={56} />
@@ -201,7 +201,7 @@ export default function Page() {
               </>
             )}
           </div>
-          <NormalButton variant="contained" clickHandler={reset}>
+          <NormalButton variant="contained" clickHandler={resetSearchParams}>
             検索条件をリセット
           </NormalButton>
         </Section>
@@ -220,14 +220,7 @@ export default function Page() {
               エラーが発生しました
             </Typography>
           )}
-          <div
-            css={css`
-              display: flex;
-              flex-wrap: wrap;
-              justify-content: space-between;
-              width: 100%;
-            `}
-          >
+          <div css={SideListStyle}>
             {membersIsLoading && (
               <RepeatComponent count={10}>
                 <SkeletonBox _css={BannerWidthStyle} />
@@ -273,6 +266,14 @@ export default function Page() {
     </>
   )
 }
+
+const SideListStyle = css`
+  margin-bottom: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+`
 
 const BannerWidthStyle = css`
   width: calc(18%);
