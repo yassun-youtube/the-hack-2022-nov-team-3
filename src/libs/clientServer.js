@@ -37,7 +37,8 @@ if (!fs.existsSync(jsonDir)) {
   }
 
   // カテゴリーデータ
-  ;['hobby', 'skill', 'prefectures'].forEach(async (key) => {
+  const categories = ['hobby', 'skill', 'prefectures']
+  for (const key of categories) {
     let flag = true
     while (flag) {
       const result = await instance
@@ -47,9 +48,9 @@ if (!fs.existsSync(jsonDir)) {
           if (skip + limit >= total) {
             flag = false
           }
-          const obj = {}
+          let obj = {}
           items.forEach((c, i) => {
-            obj[c.slug] = c.label
+            obj = { ...obj, ...{ [c.slug]: c.label } }
           })
           return obj
         })
@@ -59,7 +60,7 @@ if (!fs.existsSync(jsonDir)) {
         })
       results[key] = result
     }
-  })
+  }
 
   // メンバーデータ
   let flag = true
