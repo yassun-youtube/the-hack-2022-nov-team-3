@@ -13,7 +13,6 @@ import { css } from '@emotion/react'
 
 // type
 import { CategoryJson } from '~/types'
-import { useRouter } from 'next/navigation'
 
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
@@ -25,37 +24,23 @@ const MenuProps = {
   },
 }
 
-const getStyles = (name: string, categoryName: readonly string[], theme: Theme) => {
-  return {
-    fontWeight:
-      categoryName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  }
-}
-
 type Props = {
-  field: string
   labelName: string
-  categoryItemList: CategoryJson[]
+  categoryItemList: CategoryJson
+  value: string[]
+  changeHandler: (data: string[]) => void
 }
 
-const MultipleSelectChip = forwardRef<{ resetCategories: () => void }, Props>(function SelectChip(
-  { field, labelName, categoryItemList },
-  ref,
-) {
-  const theme = useTheme()
-  const router = useRouter()
-
+const MultipleSelectChip: React.FC<Props> = function SelectChip({
+  labelName,
+  categoryItemList,
+  value,
+  changeHandler,
+}) {
   const handleChange = (event: SelectChangeEvent<string[]>) => {
-    const {
-      target: { value },
-    } = event
-    router.replace('/?hoge=111')
-    // changeHandler(typeof value === 'string' ? value.split(',') : value);
+    const { target } = event
+    changeHandler(typeof target.value === 'string' ? target.value.split(',') : target.value)
   }
-
-  useImperativeHandle(ref, () => ({ resetCategories: () => setCategoryName([]) }))
 
   return (
     <FormControl sx={{ width: '32%' }}>
@@ -71,6 +56,7 @@ const MultipleSelectChip = forwardRef<{ resetCategories: () => void }, Props>(fu
         labelId="demo-multiple-chip-label"
         id="demo-multiple-chip"
         multiple
+        value={value}
         onChange={handleChange}
         input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
         MenuProps={MenuProps}
@@ -82,21 +68,20 @@ const MultipleSelectChip = forwardRef<{ resetCategories: () => void }, Props>(fu
           </Box>
         )}
       >
-        {categoryItemList.map((item) => (
+        {Object.entries(categoryItemList).map((item) => (
           <MenuItem
-            key={item.slug}
-            value={item.label}
+            key={item[0]}
+            value={item[1]}
             css={css`
-                font-weight: {categoryName.indexOf(name) === -1};
+              font-weight: ${value.includes(item[1]) ? 'bold' : 'normal'};
             `}
-            style={getStyles(item.label, categoryName, theme)}
           >
-            {item.label}
+            {item[1]}
           </MenuItem>
         ))}
       </Select>
     </FormControl>
   )
-})
+}
 
 export default MultipleSelectChip

@@ -1,12 +1,18 @@
 /** @jsxImportSource @emotion/react */
 'use client'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useMemo, useState, useRef } from 'react'
+import { useMemo, useState, useCallback } from 'react'
 import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
 import { css } from '@emotion/react'
 import Typography from '@mui/material/Typography'
 import Skeleton from '@mui/material/Skeleton'
+
+// types
+import { CategoryJson } from '~/types'
+
+//
+import { isEmptyObject } from '~/utils'
 
 // libs
 import { setQueryParams } from '~/libs'
@@ -26,25 +32,15 @@ import {
 import { useFetchMembers, useFetchCategories } from '~/hooks'
 
 // 1ページ当たりのメンバー
-const unit = 5
+const UNIT = 5
 
 export default function Page() {
   const router = useRouter()
   const params = useSearchParams()
 
-  const currentPage = useMemo(() => {
-    const val = Number(params.get('page'))
-    if (Number.isNaN(val) || val === 0) return 1
-    return val
-  }, [params])
-
   const [selectedSkill, setSelectedSkill] = useState<string[]>([])
   const [selectedHobby, setSelectedHobby] = useState<string[]>([])
   const [selectedPrefectures, setSelectedPrefectures] = useState<string[]>([])
-
-  const cate1Ref = useRef<{ resetCategories: () => void }>(null)
-  const cate2Ref = useRef<{ resetCategories: () => void }>(null)
-  const cate3Ref = useRef<{ resetCategories: () => void }>(null)
 
   const {
     data: membersData,
@@ -70,25 +66,33 @@ export default function Page() {
     error: prefecturesError,
   } = useFetchCategories({ category: 'prefectures' }) // 都道府県のデータを取得
 
-  const reset = () => {
-    cate1Ref.current?.resetCategories()
-    cate2Ref.current?.resetCategories()
-    cate3Ref.current?.resetCategories()
-    router.push('/')
-  }
+  // 検索条件をリセット
+  const reset = () => router.push('/')
+
+  const isEmptySkill = useMemo(() => isEmptyObject(skillData), [skillData])
+  const isEmptyHobby = useMemo(() => isEmptyObject(hobbyData), [hobbyData])
+  const isEmptyPrefectures = useMemo(() => isEmptyObject(prefecturesData), [prefecturesData])
+
+  const currentPage = useMemo(() => {
+    const val = Number(params.get('page'))
+    if (Number.isNaN(val) || val === 0) return 1
+    return val
+  }, [params])
+
+  const currentCategory = useCallback(() => {
+    return (cate: string, list: CategoryJson) => {
+      const val = params.get(cate)
+      if (!val) return []
+      return val
+        .split(',')
+        .filter((v) => list[v])
+        .map((v) => list[v])
+    }
+  }, [params])
 
   const checkExistCategory = ({ target, search }: { target: string[]; search: string[] }) => {
     if (search.length === 0) return true
     return target.some((v) => search.includes(v))
-  }
-
-  const changeToString = (param: string | string[] | undefined): string => {
-    if (Array.isArray(param)) {
-      return param[0]
-    } else if (param === undefined) {
-      return ''
-    }
-    return param
   }
 
   // フィルタリングされたメンバー一覧
@@ -129,31 +133,58 @@ export default function Page() {
               </>
             ) : (
               <>
-                {!!skillData?.length && (
+                {!isEmptySkill && (
                   <MultipleSelectChip
                     labelName={'スキル'}
-                    field={'skill'}
-                    categoryItemList={skillData}
-                    ref={cate1Ref}
-                    // changeHandler={(data) => setSelectedSkill(data)}
+                    value={currentCategory()('skill', skillData as CategoryJson)}
+                    categoryItemList={skillData as CategoryJson}
+                    changeHandler={(data) => {
+                      const result: string[] = []
+                      const d = Object.entries(skillData as CategoryJson)
+                      d.forEach((v) => {
+                        if (data.includes(v[1])) {
+                          result.push(v[0])
+                        }
+                      })
+                      const q = setQueryParams({ skill: result })
+                      router.replace(`/${q}`)
+                    }}
                   />
                 )}
-                {!!hobbyData?.length && (
+                {!isEmptyHobby && (
                   <MultipleSelectChip
                     labelName={'趣味'}
-                    field={'hobby'}
-                    categoryItemList={hobbyData}
-                    ref={cate2Ref}
-                    // changeHandler={(data) => setSelectedHobby(data)}
+                    value={currentCategory()('hobby', hobbyData as CategoryJson)}
+                    categoryItemList={hobbyData as CategoryJson}
+                    changeHandler={(data) => {
+                      const result: string[] = []
+                      const d = Object.entries(hobbyData as CategoryJson)
+                      d.forEach((v) => {
+                        if (data.includes(v[1])) {
+                          result.push(v[0])
+                        }
+                      })
+                      const q = setQueryParams({ hobby: result })
+                      router.replace(`/${q}`)
+                    }}
                   />
                 )}
-                {!!prefecturesData?.length && (
+                {!isEmptyPrefectures && (
                   <MultipleSelectChip
                     labelName={'住んでいる都道府県'}
-                    field={'prefectures'}
-                    categoryItemList={prefecturesData}
-                    ref={cate3Ref}
-                    //                    changeHandler={(data) => setSelectedPrefectures(data)}
+                    value={currentCategory()('prefectures', prefecturesData as CategoryJson)}
+                    categoryItemList={prefecturesData as CategoryJson}
+                    changeHandler={(data) => {
+                      const result: string[] = []
+                      const d = Object.entries(prefecturesData as CategoryJson)
+                      d.forEach((v) => {
+                        if (data.includes(v[1])) {
+                          result.push(v[0])
+                        }
+                      })
+                      const q = setQueryParams({ prefectures: result })
+                      router.replace(`/${q}`)
+                    }}
                   />
                 )}
               </>
@@ -191,7 +222,7 @@ export default function Page() {
               <>
                 {filteredData
                   .map((member) => <ActionAreaCard key={member.slug} {...member} />)
-                  .slice((currentPage - 1) * unit, currentPage * unit)}
+                  .slice((currentPage - 1) * UNIT, currentPage * UNIT)}
                 {[0, 1, 2].map((v) => {
                   return (
                     <div
@@ -214,7 +245,7 @@ export default function Page() {
           {!!filteredData?.length && (
             <PaginationRanges
               itemCount={filteredData?.length}
-              pageSize={unit}
+              pageSize={UNIT}
               defaultPage={currentPage}
               siblingCount={3}
               boundaryCount={1}

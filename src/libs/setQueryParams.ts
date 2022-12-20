@@ -1,25 +1,18 @@
 import queryString from 'query-string'
 
 type Props = {
-  skill?: string
-  hobby?: string
-  prefectures?: string
-  page?: string
+  [key: string]: string[]
 }
 
-const getQueryParams = (p: URLSearchParams, key: string): { [key: string]: string } => {
+export const getQueryParam = (p: URLSearchParams, key: string): { [key: string]: string } => {
   const r = p.get(key)
   return r ? { [key]: r } : {}
 }
 
 export const setQueryParams = (args: Props): string => {
-  let params = new URL(window.location.href).searchParams
-  const obj = {
-    ...getQueryParams(params, 'skill'),
-    ...getQueryParams(params, 'hobby'),
-    ...getQueryParams(params, 'prefectures'),
-    ...getQueryParams(params, 'page'),
-    ...args,
+  const parsed = queryString.parse(location.search, { arrayFormat: 'comma' })
+  for (const k in args) {
+    parsed[k] = args[k]
   }
-  return queryString.stringify(obj)
+  return '?' + queryString.stringify(parsed, { arrayFormat: 'comma' })
 }

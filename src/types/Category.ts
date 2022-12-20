@@ -18,6 +18,5 @@ export type Category = {
 
 // APIから生成したJsonのデータ型
 export type CategoryJson = {
-  label: string
-  slug: string
+  [key: string]: string
 }

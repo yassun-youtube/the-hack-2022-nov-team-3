@@ -30,9 +30,9 @@ if (!fs.existsSync(jsonDir)) {
 ;(async () => {
   // それぞれのデータが入る
   const results = {
-    hobby: [],
-    skill: [],
-    prefectures: [],
+    hobby: {},
+    skill: {},
+    prefectures: {},
     member: [],
   }
 
@@ -47,18 +47,17 @@ if (!fs.existsSync(jsonDir)) {
           if (skip + limit >= total) {
             flag = false
           }
-          return items.map((c) => {
-            return {
-              label: c.label,
-              slug: c.slug,
-            }
+          const obj = {}
+          items.forEach((c, i) => {
+            obj[c.slug] = c.label
           })
+          return obj
         })
         .catch((e) => {
           console.log(key + ' data is failed')
-          return []
+          return {}
         })
-      results[key] = [...results[key], ...result]
+      results[key] = result
     }
   })
 

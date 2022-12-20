@@ -4,7 +4,7 @@ import { AxiosError } from 'axios'
 import { client } from '~/libs'
 import { CategoryJson } from '~/types'
 
-type Data = CategoryJson[]
+type Data = CategoryJson
 
 type Props = {
   category: 'hobby' | 'skill' | 'prefectures'

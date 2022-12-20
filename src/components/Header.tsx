@@ -5,9 +5,6 @@ import { css } from '@emotion/react'
 import NextLink from 'next/link'
 import Typography from '@mui/material/Typography'
 
-// components
-import { ExternalLink } from '~/components'
-
 // constants
 import { SITE_TITLE } from '~/constant'
 

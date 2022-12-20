@@ -14,9 +14,9 @@ import theme from '~/theme'
 import { CategoryJson } from '~/types'
 
 type Props = {
-  skill: CategoryJson[]
-  hobby: CategoryJson[]
-  prefectures: CategoryJson[]
+  skill: CategoryJson
+  hobby: CategoryJson
+  prefectures: CategoryJson
 }
 
 type TagArr = { label: string; link: string }[]
@@ -24,16 +24,16 @@ type TagArr = { label: string; link: string }[]
 const TagList: React.FC<Props> = ({ skill, hobby, prefectures }) => {
   const data: { label: string; link: string }[] = useMemo(() => {
     const d = [
-      { arr: skill, link: '/?skill=' },
-      { arr: hobby, link: '/?hobby=' },
-      { arr: prefectures, link: '/?prefectures=' },
+      { list: skill, link: '/?skill=' },
+      { list: hobby, link: '/?hobby=' },
+      { list: prefectures, link: '/?prefectures=' },
     ]
     return d.reduce((prev, current) => {
       return prev.concat(
-        current.arr.map((v) => {
+        Object.entries(current.list).map((v) => {
           return {
-            label: v.label,
-            link: current.link + v.slug,
+            label: v[1],
+            link: current.link + v[0],
           }
         }),
       )
