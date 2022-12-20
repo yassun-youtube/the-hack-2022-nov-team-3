@@ -14,9 +14,9 @@ import theme from '~/theme'
 import { CategoryList } from '~/types'
 
 type Props = {
-  skill: CategoryList[]
-  hobby: CategoryList[]
-  prefectures: CategoryList[]
+  skill: Pick<CategoryList, 'label' | 'slug'>[]
+  hobby: Pick<CategoryList, 'label' | 'slug'>[]
+  prefectures: Pick<CategoryList, 'label' | 'slug'>[]
 }
 
 type TagArr = { label: string; link: string }[]

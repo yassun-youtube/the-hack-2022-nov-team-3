@@ -26,23 +26,15 @@ const Template: ComponentStory<typeof MultipleSelectChip> = (args) => (
   <MultipleSelectChip {...args} />
 )
 
-export const MultipleSelect2 = Template.bind({})
-MultipleSelect2.args = {
+export const MultipleSelect = Template.bind({})
+MultipleSelect.args = {
   labelName: 'スキル',
-  categoryItemList: [
-    {
-      label: 'JavaScript',
-      slug: 'js',
-    },
-    {
-      label: 'TypeScript',
-      slug: 'ts',
-    },
-    {
-      label: 'React',
-      slug: 'react',
-    },
-  ],
+  value: ['React'],
+  categoryItemList: {
+    js: 'JavaScript',
+    ts: 'TypeScript',
+    react: 'React',
+  },
   changeHandler: (data) => {
     return data
   },
