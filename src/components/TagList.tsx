@@ -11,12 +11,12 @@ import Button from '@mui/material/Button'
 import theme from '~/theme'
 
 // types
-import { CategoryJson } from '~/types'
+import { CategoryList } from '~/types'
 
 type Props = {
-  skill: CategoryJson
-  hobby: CategoryJson
-  prefectures: CategoryJson
+  skill: CategoryList[]
+  hobby: CategoryList[]
+  prefectures: CategoryList[]
 }
 
 type TagArr = { label: string; link: string }[]
@@ -24,16 +24,16 @@ type TagArr = { label: string; link: string }[]
 const TagList: React.FC<Props> = ({ skill, hobby, prefectures }) => {
   const data: { label: string; link: string }[] = useMemo(() => {
     const d = [
-      { list: skill, link: '/?skill=' },
-      { list: hobby, link: '/?hobby=' },
-      { list: prefectures, link: '/?prefectures=' },
+      { arr: skill, link: '/?skill=' },
+      { arr: hobby, link: '/?hobby=' },
+      { arr: prefectures, link: '/?prefectures=' },
     ]
     return d.reduce((prev, current) => {
       return prev.concat(
-        Object.entries(current.list).map((v) => {
+        current.arr.map((v) => {
           return {
-            label: v[1],
-            link: current.link + v[0],
+            label: v.label,
+            link: current.link + v.slug,
           }
         }),
       )

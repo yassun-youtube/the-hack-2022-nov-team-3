@@ -11,7 +11,7 @@ import Skeleton from '@mui/material/Skeleton'
 // types
 import { CategoryJson } from '~/types'
 
-//
+// utils
 import { isEmptyObject } from '~/utils'
 
 // libs
@@ -26,6 +26,7 @@ import {
   SkeletonBox,
   MultipleSelectChip,
   PaginationRanges,
+  RepeatComponent,
 } from '~/components'
 
 // hooks
@@ -38,64 +39,75 @@ export default function Page() {
   const router = useRouter()
   const params = useSearchParams()
 
-  const [selectedSkill, setSelectedSkill] = useState<string[]>([])
-  const [selectedHobby, setSelectedHobby] = useState<string[]>([])
-  const [selectedPrefectures, setSelectedPrefectures] = useState<string[]>([])
-
   const {
     data: membersData,
     isError: membersIsError,
     isLoading: membersIsLoading,
   } = useFetchMembers() // メンバーのデータを取得
-  const {
-    data: skillData,
-    isError: skillIsError,
-    isLoading: skillIsLoading,
-    error: skillError,
-  } = useFetchCategories({ category: 'skill' }) // 技術のデータを取得
-  const {
-    data: hobbyData,
-    isLoading: hobbyLoading,
-    error: hobbyError,
-  } = useFetchCategories({ category: 'hobby' }) // 趣味のデータを取得
-
-  const {
-    data: prefecturesData,
-    isError: prefecturesIsError,
-    isLoading: prefecturesIsLoading,
-    error: prefecturesError,
-  } = useFetchCategories({ category: 'prefectures' }) // 都道府県のデータを取得
+  const { data: skillData, isLoading: skillIsLoading } = useFetchCategories({ category: 'skill' }) // 技術のデータを取得
+  const { data: hobbyData, isLoading: hobbyLoading } = useFetchCategories({ category: 'hobby' }) // 趣味のデータを取得
+  const { data: prefecturesData, isLoading: prefecturesIsLoading } = useFetchCategories({
+    category: 'prefectures',
+  }) // 都道府県のデータを取得
 
   // 検索条件をリセット
   const reset = () => router.push('/')
 
+  // 各カテゴリーデータが空かチェック
   const isEmptySkill = useMemo(() => isEmptyObject(skillData), [skillData])
   const isEmptyHobby = useMemo(() => isEmptyObject(hobbyData), [hobbyData])
   const isEmptyPrefectures = useMemo(() => isEmptyObject(prefecturesData), [prefecturesData])
 
+  // 現在のページ番号を返す
   const currentPage = useMemo(() => {
     const val = Number(params.get('page'))
     if (Number.isNaN(val) || val === 0) return 1
     return val
   }, [params])
 
-  const currentCategory = useCallback(() => {
-    return (cate: string, list: CategoryJson) => {
-      const val = params.get(cate)
-      if (!val) return []
-      return val
-        .split(',')
-        .filter((v) => list[v])
-        .map((v) => list[v])
-    }
-  }, [params])
+  // 現在選択中のカテゴリーを返す
+  const currentCategory = ({
+    params,
+    cate,
+    list,
+  }: {
+    params: URLSearchParams
+    cate: string
+    list: CategoryJson
+  }): string[] => {
+    const val = params.get(cate)
+    if (!val) return []
+    return val
+      .split(',')
+      .filter((v) => list[v])
+      .map((v) => list[v])
+  }
 
-  const checkExistCategory = ({ target, search }: { target: string[]; search: string[] }) => {
+  // 選択されているスキルの値
+  const selectedSkill: string[] = useMemo(() => {
+    if (!skillData) return []
+    return currentCategory({ params, cate: 'skill', list: skillData })
+  }, [skillData, params])
+
+  // 選択されている趣味の値
+  const selectedHobby: string[] = useMemo(() => {
+    if (!hobbyData) return []
+    return currentCategory({ params, cate: 'hobby', list: hobbyData })
+  }, [hobbyData, params])
+
+  // 選択されている都道府県の値
+  const selectedPrefectures: string[] = useMemo(() => {
+    if (!prefecturesData) return []
+    return currentCategory({ params, cate: 'prefectures', list: prefecturesData })
+  }, [prefecturesData, params])
+
+  // 選択されたカテゴリーがある場合はtrueを返す
+  const isExistCategory = ({ target, search }: { target: string[]; search: string[] }): boolean => {
     if (search.length === 0) return true
     return target.some((v) => search.includes(v))
   }
 
-  // フィルタリングされたメンバー一覧
+  // フィルタリングされたメンバー一覧を出力
   const filteredData = useMemo(() => {
     return membersData?.filter((member) => {
       const { skill, hobby, prefectures } = member
@@ -104,9 +116,9 @@ export default function Page() {
       const prefecturesVal = prefectures.map((v) => v.label)
 
       return (
-        checkExistCategory({ target: skillVal, search: selectedSkill }) &&
-        checkExistCategory({ target: hobbyVal, search: selectedHobby }) &&
-        checkExistCategory({ target: prefecturesVal, search: selectedPrefectures })
+        isExistCategory({ target: skillVal, search: selectedSkill }) &&
+        isExistCategory({ target: hobbyVal, search: selectedHobby }) &&
+        isExistCategory({ target: prefecturesVal, search: selectedPrefectures })
       )
     })
   }, [membersData, selectedSkill, selectedHobby, selectedPrefectures])
@@ -115,6 +127,7 @@ export default function Page() {
     <>
       <CssBaseline />
       <Container maxWidth="lg">
+        {/* ======================メンバーの絞り込み=========================== */}
         <Section>
           <Title text={'メンバーの絞り込み'} />
           <div
@@ -126,17 +139,15 @@ export default function Page() {
             `}
           >
             {[skillIsLoading, hobbyLoading, prefecturesIsLoading].some((v) => v) ? (
-              <>
-                {[...new Array(3)].map((_, i) => (
-                  <Skeleton key={i} variant="rounded" width={'32%'} height={56} />
-                ))}
-              </>
+              <RepeatComponent count={3}>
+                <Skeleton variant="rounded" width={'32%'} height={56} />
+              </RepeatComponent>
             ) : (
               <>
                 {!isEmptySkill && (
                   <MultipleSelectChip
                     labelName={'スキル'}
-                    value={currentCategory()('skill', skillData as CategoryJson)}
+                    value={selectedSkill}
                     categoryItemList={skillData as CategoryJson}
                     changeHandler={(data) => {
                       const result: string[] = []
@@ -147,14 +158,14 @@ export default function Page() {
                         }
                       })
                       const q = setQueryParams({ skill: result })
-                      router.replace(`/${q}`)
+                      router.push(`/${q}`)
                     }}
                   />
                 )}
                 {!isEmptyHobby && (
                   <MultipleSelectChip
                     labelName={'趣味'}
-                    value={currentCategory()('hobby', hobbyData as CategoryJson)}
+                    value={selectedHobby}
                     categoryItemList={hobbyData as CategoryJson}
                     changeHandler={(data) => {
                       const result: string[] = []
@@ -165,14 +176,14 @@ export default function Page() {
                         }
                       })
                       const q = setQueryParams({ hobby: result })
-                      router.replace(`/${q}`)
+                      router.push(`/${q}`)
                     }}
                   />
                 )}
                 {!isEmptyPrefectures && (
                   <MultipleSelectChip
                     labelName={'住んでいる都道府県'}
-                    value={currentCategory()('prefectures', prefecturesData as CategoryJson)}
+                    value={selectedPrefectures}
                     categoryItemList={prefecturesData as CategoryJson}
                     changeHandler={(data) => {
                       const result: string[] = []
@@ -183,7 +194,7 @@ export default function Page() {
                         }
                       })
                       const q = setQueryParams({ prefectures: result })
-                      router.replace(`/${q}`)
+                      router.push(`/${q}`)
                     }}
                   />
                 )}
@@ -194,6 +205,7 @@ export default function Page() {
             検索条件をリセット
           </NormalButton>
         </Section>
+        {/* =====================メンバー=========================== */}
         <Section>
           <Title text={'メンバー'} />
           {membersIsError && (
@@ -216,31 +228,32 @@ export default function Page() {
               width: 100%;
             `}
           >
-            {membersIsLoading &&
-              [...new Array(10)].map((_, i) => <SkeletonBox _css={BannerWidthStyle} key={i} />)}
+            {membersIsLoading && (
+              <RepeatComponent count={10}>
+                <SkeletonBox _css={BannerWidthStyle} />
+              </RepeatComponent>
+            )}
             {!!filteredData?.length && (
               <>
                 {filteredData
                   .map((member) => <ActionAreaCard key={member.slug} {...member} />)
                   .slice((currentPage - 1) * UNIT, currentPage * UNIT)}
-                {[0, 1, 2].map((v) => {
-                  return (
-                    <div
-                      key={v}
-                      css={css([
-                        BannerWidthStyle,
-                        `
+                <RepeatComponent count={3}>
+                  <div
+                    css={css([
+                      BannerWidthStyle,
+                      `
                           display: block;
                           order: 1;
                         `,
-                      ])}
-                    />
-                  )
-                })}
+                    ])}
+                  />
+                </RepeatComponent>
               </>
             )}
           </div>
         </Section>
+        {/* =====================ページ送り========================= */}
         <Section>
           {!!filteredData?.length && (
             <PaginationRanges
@@ -250,7 +263,7 @@ export default function Page() {
               siblingCount={3}
               boundaryCount={1}
               changeHandler={(page) => {
-                const q = setQueryParams({ page: String(page) })
+                const q = setQueryParams({ page: [String(page)] })
                 router.push(`/${q}`)
               }}
             />
