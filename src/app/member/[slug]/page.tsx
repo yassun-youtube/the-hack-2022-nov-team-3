@@ -5,6 +5,8 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import { useRouter } from 'next/navigation'
+import ReactLoading from 'react-loading'
+import { css } from '@emotion/react'
 
 // components
 import { NormalButton, Hero, Profile, Title, LinkList, SkillList, TagList } from '~/components'
@@ -25,7 +27,26 @@ export default function Page({ params }: { params: { slug: string } }) {
             my: 5,
           }}
         >
-          {isLoading ? <>...loading</> : ''}
+          {isLoading ? (
+            <div
+              css={css`
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+              `}
+            >
+              <ReactLoading
+                type="spin"
+                color="#34c3eb"
+                height="100px"
+                width="100px"
+                className="mx-auto"
+              />
+            </div>
+          ) : (
+            ''
+          )}
           {isError ? <>Error!!!</> : ''}
           {data ? (
             <>
