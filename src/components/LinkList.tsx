@@ -28,16 +28,19 @@ const LinkList: React.FC<Props> = ({ links }) => {
         `}
       >
         {links.map((v, i) => {
+          const label = v.label.trim()
+          const value = v.value.trim()
+          if (!label || !value) return <></>
           return (
             <li
-              key={v.value + String(i)}
+              key={value + String(i)}
               css={css`
                 display: inline-block;
                 margin: 0 10px 10px 10px;
               `}
             >
               <Link
-                href={v.value}
+                href={value}
                 target="_blank"
                 rel="noopener"
                 css={css`
@@ -46,7 +49,7 @@ const LinkList: React.FC<Props> = ({ links }) => {
                   font-size: 18px;
                 `}
               >
-                🔗 {v.label}
+                🔗 {label}
               </Link>
             </li>
           )

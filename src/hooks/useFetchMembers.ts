@@ -8,7 +8,7 @@ type Data = MemberJson[]
 
 export function useFetchMembers() {
   const query = useQuery<Data, AxiosError>({
-    queryKey: ['member'],
+    queryKey: ['members'],
     queryFn: async () => {
       try {
         const result = await client.get(`/json/member.json`)
@@ -17,8 +17,8 @@ export function useFetchMembers() {
         throw e
       }
     },
-    cacheTime: 1000 * 60 * 5, // 5分
-    staleTime: 1000 * 60 * 5, // 5分
+    cacheTime: 1000 * 60 * 3, // 3分
+    staleTime: 1000 * 60 * 3, // 3分
   })
 
   return query

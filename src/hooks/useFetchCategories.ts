@@ -21,8 +21,8 @@ export function useFetchCategories({ category }: Props) {
         throw e
       }
     },
-    cacheTime: 1000 * 60 * 5, // 5分
-    staleTime: 1000 * 60 * 5, // 5分
+    cacheTime: 1000 * 60 * 3, // 3分
+    staleTime: 1000 * 60 * 3, // 3分
   })
 
   return query

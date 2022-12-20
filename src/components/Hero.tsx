@@ -101,7 +101,7 @@ const Hero: FC<Props> = ({
                 <Typography>公開日：{releaseDateVal}</Typography>
               </div>
             )}
-            {lastUpdatedDateVal && releaseDateVal !== releaseDateVal && (
+            {lastUpdatedDateVal && releaseDateVal !== lastUpdatedDateVal && (
               <div className="datesAndTimes">
                 <Typography>最終更新日：{lastUpdatedDateVal}</Typography>
               </div>

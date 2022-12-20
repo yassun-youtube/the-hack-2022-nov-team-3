@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 'use client'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useMemo, useState, useCallback } from 'react'
+import { useMemo } from 'react'
 import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
 import { css } from '@emotion/react'
@@ -238,7 +238,7 @@ export default function Page() {
                       `
                           display: block;
                           order: 1;
-                        `,
+                      `,
                     ])}
                   />
                 </RepeatComponent>

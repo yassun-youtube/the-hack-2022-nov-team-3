@@ -27,9 +27,12 @@ const SkillList: React.FC<Props> = ({ years_of_use }) => {
         `}
       >
         {years_of_use.map((v, i) => {
+          const label = v.label.trim()
+          const value = v.value.trim()
+          if (!label || !value) return <></>
           return (
             <li
-              key={v.value + String(i)}
+              key={value + String(i)}
               css={css`
                 display: block;
                 margin: 0 10px 10px;
@@ -42,7 +45,7 @@ const SkillList: React.FC<Props> = ({ years_of_use }) => {
                   font-size: 24px;
                 `}
               >
-                <span>⭐️ {v.label}</span>
+                <span>⭐️ {label}</span>
                 <b
                   css={css`
                     margin: 0 10px;
@@ -50,7 +53,7 @@ const SkillList: React.FC<Props> = ({ years_of_use }) => {
                 >
                   :
                 </b>
-                <span>{v.value}</span>
+                <span>{value}</span>
               </Typography>
             </li>
           )
