@@ -1,1 +1,1 @@
-export { removeHtml } from './removeHtml'
+export { isEmptyObject } from './isEmptyObject'

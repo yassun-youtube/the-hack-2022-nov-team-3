@@ -11,7 +11,7 @@ type Props = {
 
 export default function SkeletonBox({ _css }: Props) {
   return (
-    <Box sx={{ my: 5 }} css={_css}>
+    <Box sx={{ mb: 5 }} css={_css}>
       <div
         css={css`
           aspect-ratio: 1/1;

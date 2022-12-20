@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 'use client'
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import { css } from '@emotion/react'
@@ -12,7 +12,7 @@ type Props = {
   defaultPage: number
   siblingCount: number
   boundaryCount: number
-  changeHandler: () => void
+  changeHandler: (current: number) => void
 }
 
 const PaginationRanges: FC<Props> = ({
@@ -23,23 +23,43 @@ const PaginationRanges: FC<Props> = ({
   boundaryCount,
   changeHandler,
 }: Props) => {
+  const [defaultPageVal, setDefaultPageVal] = useState<null | number>(null)
+
+  useEffect(() => {
+    setDefaultPageVal(defaultPage)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
-    <Stack spacing={2}>
-      <Pagination
-        renderItem={(item) => (
-          <PaginationItem
-            {...item}
-            css={css`
-              background-color: rgba(0, 0, 0, 0) !important;
-            `}
-          />
-        )}
-        count={Math.ceil(itemCount / pageSize)}
-        defaultPage={defaultPage}
-        siblingCount={siblingCount}
-        boundaryCount={boundaryCount}
-        onChange={changeHandler}
-      />
+    <Stack
+      spacing={2}
+      css={css`
+        margin-bottom: 20px;
+      `}
+    >
+      {defaultPageVal && (
+        <Pagination
+          renderItem={(item) => {
+            return (
+              <PaginationItem
+                {...item}
+                css={css`
+                  background-color: rgba(0, 0, 0, 0) !important;
+                  font-size: 18px;
+                  font-weight: ${item.selected ? 'bold' : 'normal'};
+                `}
+              />
+            )
+          }}
+          count={Math.ceil(itemCount / pageSize)}
+          defaultPage={defaultPageVal}
+          siblingCount={siblingCount}
+          boundaryCount={boundaryCount}
+          onChange={(event: React.ChangeEvent<unknown>, page: number) => {
+            changeHandler(page)
+          }}
+        />
+      )}
     </Stack>
   )
 }

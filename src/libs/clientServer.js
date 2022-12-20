@@ -16,7 +16,7 @@ const filePath = (filename) => jsonDir + `/${filename}.json`
 
 const instance = axios.create({
   baseURL: `https://${process?.env?.NEXT_PUBLIC_NEWT_SERVICE_DOMAIN}.cdn.newt.so/v1`,
-  timeout: 1000,
+  timeout: 10000,
   headers: {
     Authorization: `Bearer ${process?.env?.NEXT_PUBLIC_NEWT_CDN_API_TOKEN}`,
   },
@@ -30,9 +30,9 @@ if (!fs.existsSync(jsonDir)) {
 ;(async () => {
   // それぞれのデータが入る
   const results = {
-    hobby: [],
-    skill: [],
-    prefectures: [],
+    hobby: {},
+    skill: {},
+    prefectures: {},
     member: [],
   }
 
@@ -47,15 +47,17 @@ if (!fs.existsSync(jsonDir)) {
           if (skip + limit >= total) {
             flag = false
           }
-          return items.map((c) => {
-            return {
-              label: c.label,
-              slug: c.slug,
-            }
+          const obj = {}
+          items.forEach((c, i) => {
+            obj[c.slug] = c.label
           })
+          return obj
         })
-        .catch((e) => [])
-      results[key] = [...results[key], ...result]
+        .catch((e) => {
+          console.log(key + ' data is failed')
+          return {}
+        })
+      results[key] = result
     }
   })
 
@@ -71,7 +73,10 @@ if (!fs.existsSync(jsonDir)) {
         }
         return items
       })
-      .catch((e) => [])
+      .catch((e) => {
+        console.log('member data is failed')
+        return []
+      })
     results['member'] = [...results['member'], ...result]
   }
 

@@ -11,12 +11,12 @@ import Button from '@mui/material/Button'
 import theme from '~/theme'
 
 // types
-import { CategoryJson } from '~/types'
+import { CategoryList } from '~/types'
 
 type Props = {
-  skill: CategoryJson[]
-  hobby: CategoryJson[]
-  prefectures: CategoryJson[]
+  skill: CategoryList[]
+  hobby: CategoryList[]
+  prefectures: CategoryList[]
 }
 
 type TagArr = { label: string; link: string }[]
