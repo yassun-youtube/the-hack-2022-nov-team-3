@@ -4,7 +4,7 @@
 import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
-import { useRouter } from 'next/navigation'
+import { notFound, useRouter } from 'next/navigation'
 import ReactLoading from 'react-loading'
 import { css } from '@emotion/react'
 
@@ -15,9 +15,12 @@ import { NormalButton, Hero, Profile, Title, LinkList, SkillList, TagList } from
 import { useFetchMember } from '~/hooks'
 
 export default function Page({ params }: { params: { slug: string } }) {
-  const { data, isError, isLoading } = useFetchMember({ slug: params.slug })
+  const { data, isLoading, error } = useFetchMember({ slug: params.slug })
   const router = useRouter()
 
+  if (error) {
+    notFound()
+  }
   return (
     <>
       <CssBaseline />
@@ -47,7 +50,6 @@ export default function Page({ params }: { params: { slug: string } }) {
           ) : (
             ''
           )}
-          {isError ? <>Error!!!</> : ''}
           {data ? (
             <>
               <Title text={data.name} />

@@ -19,6 +19,9 @@ export function useFetchMember({ slug }: Props) {
             slug,
           },
         })
+        if (result === null) {
+          throw new Error('404 notFound')
+        }
         return result
       } catch (e) {
         throw e
