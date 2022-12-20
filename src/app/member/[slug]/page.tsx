@@ -1,19 +1,13 @@
 /** @jsxImportSource @emotion/react */
 'use client'
 
-// 参考
-// https://zenn.dev/nishiurahiroki/articles/7e61590892499b
-
 import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
-import { useRouter, notFound } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 // components
 import { NormalButton, Hero, Profile, Title, LinkList, SkillList, TagList } from '~/components'
-
-// types
-import { Member } from '~/types'
 
 // hooks
 import { useFetchMember } from '~/hooks'
@@ -21,10 +15,6 @@ import { useFetchMember } from '~/hooks'
 export default function Page({ params }: { params: { slug: string } }) {
   const { data, isError, isLoading } = useFetchMember({ slug: params.slug })
   const router = useRouter()
-
-  if (isError) {
-    notFound()
-  }
 
   return (
     <>
