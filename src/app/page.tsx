@@ -137,6 +137,15 @@ export default function Page() {
         {/* ======================メンバーの絞り込み=========================== */}
         <Section>
           <Title text={'メンバーの絞り込み'} />
+          <Typography
+            css={css`
+              margin: 10px 0 40px;
+              text-align: center;
+            `}
+          >
+            同じカテゴリーで複数選択はor検索、カテゴリーまたぎはand検索になります
+          </Typography>
+
           <div css={SideListStyle}>
             {[skillIsLoading, hobbyLoading, prefecturesIsLoading].some((v) => v) ? (
               <RepeatComponent count={3}>
@@ -226,7 +235,7 @@ export default function Page() {
                 <SkeletonBox _css={BannerWidthStyle} />
               </RepeatComponent>
             )}
-            {!!filteredData?.length && (
+            {!!filteredData?.length ? (
               <>
                 {filteredData
                   .map((member) => <ActionAreaCard key={member.slug} {...member} />)
@@ -242,6 +251,20 @@ export default function Page() {
                     ])}
                   />
                 </RepeatComponent>
+              </>
+            ) : (
+              <>
+                <Typography
+                  variant="h6"
+                  css={css`
+                    margin: 30px 0 20px;
+                    font-weight: bold;
+                    text-align: center;
+                    width: 100%;
+                  `}
+                >
+                  該当するメンバーはいませんでした
+                </Typography>
               </>
             )}
           </div>
