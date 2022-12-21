@@ -27,7 +27,6 @@
     "axios": "^1.2.1",
     "dayjs": "^1.11.7",
     "dotenv": "^16.0.3",
-    "microcms-js-sdk": "^2.3.2",
     "newt-client-js": "^3.2.2",
     "next": "13.0.5",
     "query-string": "^8.0.3",

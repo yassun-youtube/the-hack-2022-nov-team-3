@@ -35,7 +35,14 @@ const ActionAreaCard: React.FC<Props> = ({ thumbnail, name, slug, profile, role 
       `}
     >
       <CardActionArea>
-        <CardMedia component="img" image={thumbnail?.src} alt={name} />
+        <CardMedia
+          component="img"
+          image={thumbnail?.src}
+          alt={name}
+          css={css`
+            aspect-ratio: 1/1;
+          `}
+        />
         <CardContent>
           <Typography
             gutterBottom
