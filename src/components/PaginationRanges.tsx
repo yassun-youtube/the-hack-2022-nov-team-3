@@ -1,15 +1,16 @@
 /** @jsxImportSource @emotion/react */
 'use client'
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useState, useMemo } from 'react'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
 import { css } from '@emotion/react'
-import { PaginationItem } from '@mui/material'
+import { PaginationItem, PaginationRenderItemParams } from '@mui/material'
 
 type Props = {
   itemCount: number
   pageSize: number
   defaultPage: number
+  currentPage: number
   siblingCount: number
   boundaryCount: number
   changeHandler: (current: number) => void
@@ -19,6 +20,7 @@ const PaginationRanges: FC<Props> = ({
   itemCount,
   pageSize,
   defaultPage,
+  currentPage,
   siblingCount,
   boundaryCount,
   changeHandler,
@@ -29,6 +31,10 @@ const PaginationRanges: FC<Props> = ({
     setDefaultPageVal(defaultPage)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const isCurrent = (params: PaginationRenderItemParams) => {
+    return params.type === 'page' && params.page === currentPage
+  }
 
   return (
     <Stack
@@ -46,7 +52,7 @@ const PaginationRanges: FC<Props> = ({
                 css={css`
                   background-color: rgba(0, 0, 0, 0) !important;
                   font-size: 18px;
-                  font-weight: ${item.selected ? 'bold' : 'normal'};
+                  font-weight: ${isCurrent(item) ? 'bold' : 'normal'};
                 `}
               />
             )

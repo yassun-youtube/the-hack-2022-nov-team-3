@@ -166,7 +166,7 @@ export default function Page() {
                           result.push(v[0])
                         }
                       })
-                      const q = setQueryParams({ skill: result })
+                      const q = setQueryParams({ skill: result, page: ['1'] })
                       router.push(`/${q}`)
                     }}
                   />
@@ -184,7 +184,7 @@ export default function Page() {
                           result.push(v[0])
                         }
                       })
-                      const q = setQueryParams({ hobby: result })
+                      const q = setQueryParams({ hobby: result, page: ['1'] })
                       router.push(`/${q}`)
                     }}
                   />
@@ -202,7 +202,7 @@ export default function Page() {
                           result.push(v[0])
                         }
                       })
-                      const q = setQueryParams({ prefectures: result })
+                      const q = setQueryParams({ prefectures: result, page: ['1'] })
                       router.push(`/${q}`)
                     }}
                   />
@@ -276,6 +276,7 @@ export default function Page() {
               itemCount={filteredData?.length}
               pageSize={UNIT}
               defaultPage={currentPage}
+              currentPage={currentPage}
               siblingCount={3}
               boundaryCount={1}
               changeHandler={(page) => {
